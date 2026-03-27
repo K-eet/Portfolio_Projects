@@ -1,1 +1,1 @@
-This repo contains all of my portfolio projects
+This repository contains two end-to-end data analytics projects built to professional standard, covering ETL pipeline design, customer lifetime value modelling, SQL analytics, and interactive dashboarding in Power BI and Tableau. These projects formed the basis of my Business Intelligence Analyst application to Shopee (Sea Group).
