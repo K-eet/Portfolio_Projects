@@ -1,0 +1,17 @@
+# Virtual environment
+venv/
+env/
+.env/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Data files (optional - remove if you want to share data)
+*.pkl
+
+# Python cache
+__pycache__/
+*.pycvenv/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
