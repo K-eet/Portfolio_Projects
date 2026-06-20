@@ -41,7 +41,18 @@ private issuer, files 20-F annually, no 10-Q quarterly reports exist).
 
 Extraction is wired into **01_data_collection.ipynb** (Phase 2 section) and saved as a
 tidy long DataFrame `[company, metric, end, val]` (599 rows) to
-**data/quarterly_edgar.pkl**.
+**data/quarterly_edgar.pkl**. The notebook section is annotated for portfolio readers:
+a flow-vs-stock / discrete-vs-cumulative conceptual frame, inline design rationale on the
+dispatch-by-reporting-shape extractor, a reconciliation **validation cell** (four
+reconstructed quarters must sum to the reported annual; 2018+ window reconciles to 0.00%),
+and a decisions/data-quality log.
+
+**Data-quality finding (documented, not a bug):** Ford's FY2013 `NetIncomeLoss` is tagged
+$7.16B in its original 2013 10-K but $11.95B in a comparative column of the 2015 10-K.
+Keeping the latest-filed value (correct for restatements) picks up that re-tag, so it
+disagrees with the original filing and Ford's own quarters. It predates the analysis window
+and no reconstruction depends on it (2013 Q4 is reported directly), so validation surfaces it
+informationally and asserts hard only on 2018+.
 
 ## Resolved
 1. ~~Assets instant concept~~ — `get_instant_metric_history` added (flow vs stock:
