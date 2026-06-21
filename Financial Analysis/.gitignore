@@ -11,7 +11,9 @@ env/
 
 # Python cache
 __pycache__/
-*.pycvenv/
-.ipynb_checkpoints/
-__pycache__/
 *.pyc
+
+# Local-only working/reference docs (not part of the public portfolio)
+CLAUDE.md
+HIRING_MANAGER_REVIEW.md
+PROJECT_STATUS.md
