@@ -6,14 +6,26 @@ Analyzed a UK-based online retail dataset containing **541,909 transactions** sp
 ## Project Objective
 Build a comprehensive analytics pipeline to uncover customer purchasing patterns, identify high-value segments, and provide actionable insights for business growth.
 
+## Quickstart
+
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python get_data.py               # downloads the dataset -> data.csv (no login needed)
+jupyter lab                      # run notebooks 1 -> 2 -> 3 in order
+```
+
+The `.csv` files are generated (not committed): `get_data.py` creates `data.csv`, then
+the notebooks produce `clean_data.csv` and `data_final.csv` as you run them in order.
+
 ## Key Skills Demonstrated
 
 | Category | Skills |
 |----------|--------|
 | **Data Engineering** | ETL pipeline design, data cleaning, feature engineering |
 | **Python** | Pandas, data wrangling, regex pattern matching, aggregations |
-| **SQL** | Complex queries, aggregations, JOINs, business metrics |
-| **Data Visualization** | Matplotlib, Seaborn, Power BI dashboard |
+| **Data Visualization** | Matplotlib, Seaborn |
 | **Statistical Analysis** | Descriptive statistics, distribution analysis, segmentation |
 | **Business Analytics** | CLV modeling, customer segmentation, trend analysis |
 
@@ -30,12 +42,6 @@ Raw Data (541K rows)
         |                     (CLV, RFM metrics, time features)
         v
 [3. Exploratory Data Analysis] --> Statistical analysis & visualizations
-        |
-        v
-[4. SQL Analytics] --> Business queries for reporting
-        |
-        v
-[Power BI Dashboard] --> Interactive business intelligence
 ```
 
 ## Detailed Methodology
@@ -87,16 +93,6 @@ Created actionable business metrics:
 - Small number of products drive majority of revenue
 - Medium and high-priced items generate most sales
 
-### 4. SQL Analytics
-
-Developed reusable SQL queries for:
-- Top-selling products by revenue
-- Customer lifetime value rankings
-- Country-level performance metrics
-- Monthly sales trends
-- Returning vs. new customer analysis
-- Weekend vs. weekday comparisons
-
 ## Key Business Insights
 
 1. **Customer Retention is Critical**: Returning customers generate the vast majority of revenue - invest in loyalty programs
@@ -112,8 +108,6 @@ Developed reusable SQL queries for:
 | `1. data_cleaning.ipynb` | Data preprocessing and quality checks |
 | `2. feature_engineering.ipynb` | Feature creation and validation |
 | `3. EDA.ipynb` | Exploratory analysis with visualizations |
-| `sql_queries_eda.sql` | Reusable SQL queries for business metrics |
-| `Ecommerce Dashboard.pbix` | Power BI interactive dashboard |
 | `data.csv` | Original Kaggle dataset |
 | `clean_data.csv` | Cleaned dataset |
 | `data_final.csv` | Final dataset with engineered features |
@@ -122,8 +116,6 @@ Developed reusable SQL queries for:
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=flat&logo=postgresql&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=flat)
 ![Seaborn](https://img.shields.io/badge/Seaborn-3776AB?style=flat)
 
