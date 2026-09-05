@@ -202,3 +202,40 @@ def get_merged_metric_history(facts, concepts):
         return merged.sort_values('end').reset_index(drop=True)
 
     return _merge(q_parts), _merge(a_parts)
+
+# --- Annual convenience layer -------------------------------------------------
+# The four extractors above all return as-filed history; the quarterly path uses
+# their quarterly half. The annual half is what the headline analysis (notebooks
+# 02-05) runs on, so this wrapper dispatches on reporting shape exactly as the
+# quarterly path does and hands back one value per fiscal year.
+
+def get_annual_series(facts, method, concept):
+    """Annual 10-K values for one metric, as a Series indexed by fiscal year.
+
+    `method` selects the extractor matching the metric's reporting shape and
+    mirrors the dispatch used for quarterly extraction:
+      'full'    - income-statement flow reported as discrete quarters
+      'merged'  - same, stitched across an XBRL tag migration
+      'ytd'     - cash-flow flow reported cumulatively year-to-date
+      'instant' - balance-sheet stock, a point-in-time snapshot
+
+    For 'instant' concepts there is no annual period, so the fiscal-year-end
+    (December) snapshot is used — both filers here report on a calendar year.
+    """
+    if method == "full":
+        _, annual = get_full_metric_history(facts, concept)
+    elif method == "merged":
+        _, annual = get_merged_metric_history(facts, concept)
+    elif method == "ytd":
+        _, annual = get_ytd_flow_history(facts, concept)
+    elif method == "instant":
+        annual = get_instant_metric_history(facts, concept)
+        annual = annual[annual["end"].dt.month == 12]
+    else:
+        raise ValueError(f"unknown method {method!r}")
+
+    if annual.empty:
+        return pd.Series(dtype="float64", name=concept)
+    return (annual.assign(year=annual["end"].dt.year)
+                  .set_index("year")["val"]
+                  .rename(concept if isinstance(concept, str) else concept[0]))
