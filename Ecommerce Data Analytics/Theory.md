@@ -11,14 +11,14 @@ numbers this repo actually produced. Written to be read straight through.
 |---|---|
 | Notebook 4 — define churn | **Done.** Evidence laid out, threshold chosen (90 days) |
 | Notebook 5 — temporal split + baseline | **Done.** Logistic regression, AUC 0.744 |
-| Notebook 6 — cost and benchmark | **Not started.** This is the next and last step |
+| Notebook 6 — cost and benchmark | **Done.** The money result is in section 6 below |
 
-Also done recently, outside the analysis: deleted the `Customer_Segmentation` folder and purged it
+All three churn notebooks are committed, and the README carries the result. The analysis is
+complete: the sequence runs from "there is no label" to a number a business could act on.
+
+Also done earlier, outside the analysis: deleted the `Customer_Segmentation` folder and purged it
 from git history, removed the empty `.pbix` and the orphan SQL file, and wrote a bounded scope
-into `CLAUDE.md` with a "Someday" list so the next step can't sprawl.
-
-The two churn notebooks are **still untracked** — they exist on your disk but not in git, so
-nobody looking at your GitHub can see them.
+into `CLAUDE.md` with a "Someday" list so the last step couldn't sprawl. It didn't.
 
 ---
 
@@ -201,7 +201,7 @@ audience is the business reader.
 
 ---
 
-## 6. Step 3: pricing the errors (the part that isn't built yet)
+## 6. Step 3: pricing the errors
 
 ### Why 0.5 is the wrong cutoff
 
@@ -223,7 +223,7 @@ So the cutoff should sit far below 0.5. *How far* is an arithmetic question, not
 ### The three assumptions
 
 Rather than researching real figures — which would eat the budget and still be guesses — the
-notebook will state three assumptions plainly:
+notebook states three assumptions plainly:
 
 1. **Contact cost: £3** per customer
 2. **Save rate: 25%** — a quarter of contacted churners are talked round
@@ -244,7 +244,26 @@ expected value = Σ (churned × save_rate × value_at_risk) − £3 × contacts
 ```
 
 Sweep the cutoff from low to high, compute this at each point, plot it. The peak is the optimal
-threshold, and it will be nowhere near 0.5.
+threshold, and it is nowhere near 0.5.
+
+### What came out
+
+**The optimal cutoff is 0.04.** Not 0.5. Using the default instead costs £17,120 on a test set of
+587 customers — it contacts 43 people when it should contact 538.
+
+The arithmetic behind that is one line, and it's worth being able to say out loud. Each customer
+has their *own* break-even probability:
+
+```
+p* = contact_cost / (save_rate × value_at_risk)
+```
+
+For the median customer that's £3 / (0.25 × £523) = **2.3%**. Contacting is so cheap relative to
+what a customer is worth that you should chase people you are barely suspicious of. 96.9% of
+customers clear their own break-even — which is another way of saying *contact almost everyone*.
+
+**And that's a problem for the model**, because "contact almost everyone" is not a strategy that
+needs a model. Hence step 4.
 
 ---
 
@@ -272,14 +291,59 @@ Why it matters — comparing a carefully optimised model against a rule you didn
 a rigged fight. You'd "win" by handicapping the opponent. Sweeping both is the honest comparison,
 and it costs about ten extra lines.
 
-### If the rule wins
+### The rule won — and then the question changed
 
-Publish it. "A logistic model on RFM features doesn't beat a 90-day silence rule once you price the
-errors, so use the rule" is a **stronger** finding than a marginal victory. It's the sort of thing
-practitioners find and almost nobody writes up, because it feels like failure.
+**The model beats the tuned rule by £136 across 587 customers. That's £0.23 each. It's nothing.**
 
-It isn't. Knowing when the simple thing suffices is what separates someone who applies models from
-someone who sells them.
+The gap survives no sensitivity test either: across every combination of contact cost (£1 to £25)
+and save rate (10% to 40%), the model's advantage never exceeds £1.51 per customer. Nobody should
+run a feature pipeline and a retraining schedule for that.
+
+Worth noting what the *flattering* version of this number would have been. Against the rule fired
+at 90 days — the version originally written down — the model appears to win by £13,690. That
+number is real, and it would have been easy to report. But it isn't a win for the model; it's a
+win for **contacting more people**, which the rule does just as well once you let it fire at 2 days
+instead of 90. Sweeping both sides is what turns a £13,690 illusion into a £136 fact.
+
+### But then: the budget
+
+The unconstrained comparison has a hidden assumption — that you can contact as many people as you
+like. Under that assumption the answer is trivially "contact nearly everyone", and no *ranking*
+can distinguish itself, which is exactly why the model looked worthless.
+
+Real retention teams have a budget: *we can work 100 accounts this quarter.* Then the only thing
+that matters is who's at the top of the list, and that's a ranking problem — which is what a model
+is actually for. Scoring five rankings on the same test set, at a budget of 100, median over 30
+splits:
+
+| Ranking | Median EV |
+|---|---|
+| **probability × value at risk** | **£7,132** |
+| value at risk alone (no model) | £4,956 |
+| recency — the no-model rule | £4,022 |
+| random | £3,198 |
+| probability alone | £2,881 |
+
+Two things there are worth more than the AUC.
+
+**Ranking by churn probability alone is worse than random.** The customers most likely to lapse are
+the small, infrequent ones. Spend a scarce budget on them and you protect almost no money. This is
+the trap the conventional "deploy the classifier" answer walks straight into, and *no accuracy
+metric can see it* — the model with AUC 0.744 is doing exactly what it was trained to do.
+
+**The model only pays once its output is priced.** Multiply the probability by what each customer
+is worth and it becomes the best ranking available — beating the rule in 25 of 30 splits by a
+median £3,233.
+
+So the finding isn't "the model is useless" and it isn't "the model works". It's:
+
+> The model has no value as a classifier, and real value as a *prioritiser* — but only when its
+> probabilities are multiplied by what each customer is worth. Deployed the conventional way, it
+> would have performed worse than picking customers at random.
+
+That's a better result than a marginal victory would have been. Knowing when the simple thing
+suffices — and spotting the specific condition under which it stops sufficing — is what separates
+someone who applies models from someone who sells them.
 
 ---
 
@@ -296,9 +360,11 @@ temporal split, leak-free
       ↓  which gives honest probabilities             → AUC 0.744
 probabilities that mean something
       ↓  which can be priced against real costs       → notebook 6
-optimal contact threshold
-      ↓  compared against the no-model rule           → notebook 6
-THE RESULT: the money gap between model and rule
+optimal contact threshold (0.04, not 0.5)
+      ↓  compared against the no-model rule, swept    → notebook 6
+gap = £136, i.e. nothing
+      ↓  unless the contact budget is finite          → notebook 6
+THE RESULT: worthless as a classifier, £3,233 better as a priced prioritiser
 ```
 
 Get the label wrong and everything downstream is measuring the wrong thing. Leak the future and the
@@ -317,23 +383,36 @@ If someone asks what the project is:
 > because a random split leaks the future into the features and gives you a model that looks great
 > and predicts nothing. The model gets AUC 0.744, which is fine but isn't the answer. The answer is
 > what happens when you price the two errors — contacting someone costs a few pounds, losing them
-> costs their forward value — and compare against just contacting everyone who's been quiet for 90
-> days. The gap between those two numbers is the actual result."
+> costs their forward value. Do that, and the model beats a plain 'contact everyone who's been
+> quiet' rule by about 20p a customer. It's worthless. *Unless* you can only contact a hundred
+> people, in which case ranking by probability times value at risk earns roughly three thousand
+> pounds more than the rule — while ranking by probability alone, which is what everyone actually
+> does, performs worse than picking customers at random."
 
 That paragraph is worth more than the code, and it's the thing to be able to say without notes.
+The last sentence is the one that will get followed up on in an interview, so be ready to explain
+*why*: the likeliest churners are the smallest customers.
 
 ---
 
 ## 10. What's left
 
-**Next:** notebook 6 — cost sweep, rule sweep, one chart, one sentence. Three hours, bounded in
-`CLAUDE.md`. The Someday list there holds everything deliberately excluded, so if you find yourself
-tuning hyperparameters or building a second model, that's the signal to stop.
+**The analysis is done.** Notebook 6 closes the sequence, and the README carries the result.
 
-**Then:** commit the churn notebooks — they're still untracked and therefore invisible — and add a
-line to the README with the money result.
+What deliberately wasn't done, and why it would be the wrong instinct: a second model, tuned
+hyperparameters, more features. The bottleneck in this project was never model quality. It was the
+*economics* — and every one of those three numbers (£3 contact cost, 25% save rate, the run-rate
+proxy for value) is an assumption I invented. The conclusion is far more sensitive to whether the
+save rate is really 25% than to whether the classifier is logistic regression or gradient boosting.
 
----
+**So the honest next step is measurement, not modelling:** run the intervention on a holdout group
+and find out what a contact actually costs and how many customers it actually saves. That single
+experiment would be worth more than any amount of feature engineering — and until it's run, the
+right posture towards the £7,132 is that it's an estimate resting on three guesses, stated openly
+so a reader can substitute their own.
 
-*This file sits alongside the notebooks and is currently untracked, so it's local-only unless you
-choose to commit it.*
+**The remaining limits, stated plainly:** the save rate is assumed constant across customers when
+it almost certainly varies with how far gone someone is; value at risk is a historical run-rate,
+not a forecast; the test set is 587 customers with revenue concentrated in a handful of wholesale
+accounts, which is why 30 splits are reported rather than one; and the whole thing rests on a
+single year of a single retailer's data.
