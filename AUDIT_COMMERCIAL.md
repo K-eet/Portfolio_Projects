@@ -4,7 +4,8 @@
 **Supersedes:** `AUDIT.md` (written for analyst roles — kept, not deleted, because the factual
 inventory in §1 there is still accurate and you may have already acted on parts of it).
 **Scope:** audit only. No files edited or created except this one.
-**Progress:** see **§0.1** — e-commerce/churn items closed 6 September 2026.
+**Progress:** see **§0.1** (e-commerce/churn) and **§0.2** (Financial Analysis) — both closed
+6 September 2026.
 
 Three target tracks:
 - **Track 1 — Pure Outbound.** SDR / BDR / Inside Sales / Commercial Development Rep.
@@ -35,7 +36,7 @@ last time, and the change of audience is why:
 | Churn steps 3–4 | **Don't finish. Leave in progress.** | **Finish it — high priority.** Pricing errors against a naive rule *is* an ROI business case, which is core Solutions Engineer and Founder's Associate work. |
 | SCIR investment thesis | "Keep, good writing" | **Your single most valuable asset for Tracks 2 and 3** — and it needs an editing pass it hasn't had. |
 | `Customer_Segmentation` | Cut (confidentiality) | **Still cut the folder** — but its *concept* is now the model for your best new project. See §4. |
-| BYD currency error | Fix first, credibility | **Fix first, harder.** In commercial roles, misstating a number by 7× in front of a buyer isn't embarrassing, it's disqualifying. |
+| BYD currency error | Fix first, credibility | **Fix first, harder.** In commercial roles, misstating a number by 7× in front of a buyer isn't embarrassing, it's disqualifying. ⟶ **DONE 6 Sep — and it moved the conclusions, not just the figures. See §0.2.** |
 
 **What doesn't change:** delete `Customer_Segmentation` (a published customer ledger with credit
 terms is a liability under any job title), delete the 2-byte `.pbix`, delete the orphan SQL file,
@@ -43,7 +44,7 @@ commit the two untracked churn notebooks, fix the root README's "two projects" o
 Those cost about two hours and remain the highest-leverage two hours available.
 
 > **Status, 6 Sep 2026:** all of these are done except the root README, which the owner is holding
-> until all three projects are finished. See **§0.1** for the full progress log.
+> until all three projects are finished. See **§0.1** and **§0.2** for the full progress logs.
 
 ---
 
@@ -105,7 +106,118 @@ revenue while the equally sized At Risk group produce **5.8%**.
 
 `git mv` to `ecommerce-analytics` (§6.1 item 4) · the root README rewrite (§6.1 item 5, §7) —
 deferred by the owner until all three projects are finished · the ICP project (§4) · the deployed
-artefact and the Loom (§6.3) · everything in Financial Analysis.
+artefact and the Loom (§6.3) · everything in Financial Analysis — **now closed, see §0.2**.
+
+---
+
+## 0.2 Progress log — Financial Analysis, 6 September 2026
+
+*Added after §0.1. Covers the **Financial Analysis project only**. Committed as
+`4fce548` on branch `fix/financial-analysis-currency-and-scope`.*
+
+| Audit item | Raised in | Status |
+|---|---|---|
+| BYD CNY/USD currency error | §0, §1, §3, §6.1 item 6, §6.2 | **Done.** Diagnosis confirmed empirically — `BYDDY.info` returns `financialCurrency=CNY` with `currency=USD` |
+| Tesla's P/E — three figures, one company | §1, §6.2 | **Done.** One figure everywhere: **189.3×**. See the note below on why it is not 188× |
+| "NPM dropped by 8.2% and its ROA dropped by 8.2%" | §1, §6.2 | **Done.** −8.2pp and −9.4pp respectively, and both now stated as *points* |
+| "Its CCR is 2.09, barely above 1" | §1, §6.2 | **Done.** 2.10, described as the lowest of the three but still double 1 |
+| Ranking contradicts the rest of the repo | §1, §6.2 | **Done.** BYD → Ford → Tesla, identical in notebooks 04 and 05 and the README |
+| SCIR prose — proofread and reconcile | §3, §6.2 (hours 4–5) | **Done.** Rewritten rather than proofread — see below |
+| `edgar_utils.py` — "archive in place, don't extend" | §3 | **Deliberately not followed.** The owner directed EDGAR to become the *primary* source. See the deviation note |
+| `02_visualization.ipynb` (3 cells) — CUT as padding | §3 | **Not done.** The owner declined the merge into 03. It now carries a snapshot table and an interpretation, so it is no longer three cells of padding, but it is still a thin notebook |
+| Export the Plotly charts to PNG | §6.3 | **Still open.** The six charts render only in a live kernel |
+
+### The currency fix changed the conclusion, not just the figures
+
+The audit treated this as a credibility defect — a right answer stated wrongly. It is not. Once
+BYD's renminbi statements are translated, **the analysis reaches different conclusions**:
+
+| 2024 | Before | After |
+|---|---:|---:|
+| BYD free cash flow | $36.1B | **$5.02B** |
+| BYD P/E | 2.4× | **17.5×** |
+| BYD FCF yield | 36.8% | **5.1%** |
+
+The consequential one is not BYD's own numbers but the ranking they implied. In a single currency,
+**Ford is the largest absolute cash generator of the three** — $6.74B against BYD's $5.02B and
+Tesla's $3.58B — so BYD is no longer cheapest on every metric, and the claim the old README led
+with was wrong in *direction* as well as magnitude. Ford's thesis was upgraded and BYD's
+downgraded on the strength of it. The notebooks say so explicitly rather than quietly restating
+the numbers.
+
+Ford also produced the finding the corrected data made visible: it is cheapest on P/E (6.0×) and
+FCF yield (19.1%) yet mid-pack on EV/EBITDA (12.2× against BYD's 5.5×), because it carries
+**$160.9B of debt against a $35.2B market cap** — 4.6×, almost all of it Ford Credit. Two lenses
+disagreeing about the same company is a better paragraph than anything in the original version.
+
+### On §7's drafted line — the audit was half right, again
+
+§7 drafted: *"The market pays ~188× earnings for Tesla against ~18× for BYD, despite BYD generating
+more free cash flow and converting earnings to cash more reliably."*
+
+- **~18× for BYD was a good estimate** — the true figure is 17.5×.
+- **~188× was not quite right, for an interesting reason.** 188.3 was yfinance's figure. Against
+  as-filed EDGAR net income the multiple is **189.3×**. The audit could not have known this, but it
+  means the "one figure" the repo reconciles to is not the one §7 predicted.
+- **"BYD generating more free cash flow" needs a qualifier.** More than Tesla, yes. Not more than
+  Ford. Written as drafted it would have reproduced the original error in gentler language.
+- **"converting earnings to cash more reliably" holds** — BYD's cash conversion of 3.32 is the
+  highest of the three.
+
+### Four defects this audit did not catch
+
+1. **The analysis window was on a timer.** Notebooks 01, 03 and 04 derived their cutoff from
+   `datetime.today().year - 2`, while notebook 05 hard-coded 2024. It happens to resolve to
+   2022–2024 today. In January 2027 it would have silently become 2023–2025 while every sentence of
+   the prose stayed pinned to the old years — the stale-figures defect §0.1 found in e-commerce,
+   except scheduled rather than committed. Replaced with one `config.ANALYSIS_YEARS` constant.
+2. **The documented run order crashed.** Notebook 04 argued from valuation multiples that notebook
+   05 wrote to disk, so the README's own "run 01 → 05 in order" instruction failed on a clean
+   checkout. Price collection moved into notebook 01. This is the §0.1 defect class again: an
+   instruction nobody had executed end to end.
+3. **`quarterly_edgar.pkl` was consumed by nothing.** Notebook 01 spent 200 lines and a validation
+   suite building a quarterly dataset no downstream notebook read, and the README did not mention
+   the phase existed. Now a labelled appendix that states it is not part of the pipeline.
+4. **The setup instructions did not work.** `requirements.txt` contained no Jupyter package despite
+   the README's `jupyter lab` instruction, and `.venv/` was not in `.gitignore`.
+
+### The deviation from §3 — EDGAR, "don't extend it"
+
+§3 said to archive `edgar_utils.py` in place and stop investing. The owner directed the opposite:
+EDGAR is now the **primary** source for Tesla and Ford, on as-filed 10-K figures rather than vendor
+aggregates.
+
+It could not become the source for everything, and the reason is worth recording because it is a
+limitation to state rather than a gap to apologise for. **BYD files nothing financial with the
+SEC.** Its only EDGAR presence, CIK 1445162, is ADR registration paperwork — `F-6EF`, `F-6 POS`,
+`424B3` — filed by the depositary bank; there is no 20-F, no 10-K, and `companyfacts` returns
+**404**. EBITDA, total debt and share count also stayed on yfinance for all three companies,
+because Ford and Tesla tag them incompatibly in XBRL and sourcing them per filer would have
+quietly rebuilt the same apples-to-oranges comparison the currency fix had just removed.
+
+Against §3's commercial-legibility argument this is a real cost: it is more engineering in the
+project, not less. Against Track 3 it is the opposite — a candidate who can say *why* a data source
+cannot answer a question is doing the pre-sales job §2 describes.
+
+### What now guards the fix
+
+- `fx.py` requires an explicit `flow` or `stock` argument with **no default**, because choosing
+  silently is the error itself.
+- `test_fx.py` pins the regression: CNY 36.094B must translate to ~$5.0B. 24 tests pass.
+- Notebook 01 asserts a cross-company revenue-spread check. Verified as more than decorative by
+  re-introducing the original bug against real data: 1.89× corrected, **8.0× and failing** when BYD
+  is left in renminbi.
+- All 41 figures quoted in the README and notebooks were cross-checked against the pipeline output.
+
+**One residual, disclosed rather than fixed.** BYD's ROA reads 5.22% translated against 5.14% as
+reported in renminbi, because net income translates at the average rate and total assets at the
+year-end rate. That is standard practice, but it means BYD's ROA is not strictly like-for-like with
+Tesla's and Ford's, and the README says so.
+
+### Still open in Financial Analysis
+
+Exporting the six Plotly charts to PNG (§6.3) · folding `02_visualization.ipynb` into 03 (§3 —
+declined) · the "So what would you do about it?" section §7 asks for on every project.
 
 ---
 
@@ -149,6 +261,14 @@ profits from the business the transition is killing"* is a sentence that would l
 commercial conversation. The variant-perception sections do the hardest thing in analysis — state
 what the market believes, then say why it's wrong and what would prove you wrong. **The strategy
 is there and the proofreading isn't**, which for an outbound role is exactly the wrong way round.
+
+> **Status, 6 Sep 2026.** Every defect in the five bullets above is closed (**§0.2**). The bullets
+> are left in the present tense as the original finding. Two corrections to them, for the record:
+> the reconciled P/E is **189.3×**, not the 188.3 quoted here — 188.3 was yfinance's figure and the
+> repo now runs on as-filed EDGAR data — and the NPM fall is **8.2pp**, not the 8.1 stated above,
+> for the same reason. The 9.4pp ROA figure was right. It also turned out that "the proofreading
+> isn't" understated the problem: the BYD and Ford theses were not mis-proofread but mis-argued,
+> because they rested on the uncorrected currency figures, and both had to be rewritten.
 
 ---
 
@@ -246,12 +366,12 @@ today. With the §6 fixes it becomes a genuine advantage.
 |---|---|---|
 | `Customer_Segmentation/` | **CUT** (unchanged) | Liability is title-independent. Purge from history — `AUDIT.md` §8 has the commands. |
 | `.pbix` (2 B), `sql_queries_eda.sql` | **CUT** (unchanged) | Advertising things that don't exist is worse for sales roles, where overstating is the cardinal sin. |
-| `02_visualization.ipynb` (3 cells) | **CUT** (unchanged) | Padding. |
-| **Numeric contradictions across Financial Analysis** | **FIX FIRST** | Was #1 by credibility. Now #1 by a wider margin. |
-| **SCIR prose — proofread and reconcile** | **FIX — new, high** | This is your writing sample for all three tracks. 45 minutes. |
+| `02_visualization.ipynb` (3 cells) | **DECLINED** (6 Sep) | Padding. Owner kept it; now carries a snapshot table and interpretation, but still thin. |
+| **Numeric contradictions across Financial Analysis** | **DONE** (6 Sep) ⟵ *was: FIX FIRST* | Was #1 by credibility. Correcting it changed the ranking and the headline finding — see §0.2. |
+| **SCIR prose — proofread and reconcile** | **DONE** (6 Sep) | Rewritten, not proofread: the corrected data invalidated the BYD and Ford theses. See §0.2. |
 | Churn steps 3–4 | **DONE** (6 Sep) ⟵ *was: FINISH, reversed* | An ROI case with a do-nothing benchmark. Directly transferable to a business case. |
 | Berkshire new-build premium | **CONDITIONAL** ⟵ *demoted* | Only if targeting proptech/contech. |
-| `edgar_utils.py` + EDGAR pipeline | **ARCHIVE in place** (unchanged) | Good work, zero commercial legibility. Don't extend it. |
+| `edgar_utils.py` + EDGAR pipeline | **OVERRULED** (6 Sep) ⟵ *was: ARCHIVE in place* | Owner made EDGAR the primary source for Tesla and Ford. Deviation and its cost recorded in §0.2. |
 | Notebooks 1 & 2 blank | **DONE** (6 Sep) | Cheap, and it turned 399,689 from an assertion into a reproducible figure. |
 | E-commerce README stale figures | **DONE** (6 Sep) | 399,689 verified once the notebooks were run; 41.3% / 42.5% did not exist and were replaced. See §0.1. |
 | Root README | **REWRITE — commercially** | See §7. The current framing actively argues for a different job. |
@@ -355,14 +475,14 @@ Assumes the ~15 hours from your original brief; §6.3 covers 30–45.
 | 3 | ~~`git add` the two churn notebooks — still untracked, still invisible.~~ **DONE**, and notebook 6 with them. | 5 |
 | 4 | `git mv "Ecommerce Data Analytics" ecommerce-analytics` | 5 |
 | 5 | Rewrite the root README on the §7 structure. **Drop the "BI Analyst application to Shopee" framing** — under these tracks it is an argument for a different job. | 30 |
-| 6 | Confirm the BYD CNY/USD diagnosis yourself in notebook 05. | 20 |
+| 6 | ~~Confirm the BYD CNY/USD diagnosis yourself in notebook 05.~~ **DONE** — confirmed empirically: `BYDDY.info` returns `financialCurrency=CNY`, `currency=USD`. | 20 |
 
 ### 6.2 Hours 2–15
 
 | Hours | Task |
 |---|---|
-| **2–4** | **Fix every numeric contradiction in Financial Analysis.** Currency error; reconcile Tesla's P/E to one figure across notebooks 04, 05 and the README; correct the ROA 8.2 → 9.4pp; fix "barely above 1"; reconcile or remove the ranking. |
-| **4–5** | **Proofread the SCIR notebook properly.** Typos, capitalisation, doubled spaces. Read it aloud. This is your writing sample. |
+| **2–4** | **DONE (6 Sep).** ~~Fix every numeric contradiction in Financial Analysis.~~ All five closed. The P/E reconciles to 189.3×, not the 188× §7 predicted — see §0.2. |
+| **4–5** | **DONE (6 Sep).** ~~Proofread the SCIR notebook properly.~~ Rewritten — the corrected figures broke the BYD and Ford arguments, not just their numbers. |
 | **5–12** | **Build the Companies House ICP project** (§4), including the three example outbound emails. Construction SIC codes if going the contech route. |
 | **12–15** | **DONE (6 Sep).** ~~Finish churn steps 3–4~~ as an ROI case: threshold sweep, expected £ against the no-model 90-day rule, one chart, one sentence of result. Publish it even if the model loses to the rule — "the simple rule wins, so use the rule" is a strong commercial finding. |
 
@@ -373,7 +493,7 @@ project and the churn ROI case under this brief.
 ### 6.3 If you have 30–45 hours
 
 - **+3h — export the Plotly charts to PNG** (`AUDIT.md` §8), so Financial Analysis stops showing
-  six blank gaps.
+  six blank gaps. **Still open** after the 6 Sep work — the charts render only in a live kernel.
 - ~~**+30 min — run the two blank e-commerce notebooks** and commit with outputs.~~ **DONE (6 Sep)** — and notebooks 3, 4 and 5 re-run with them, so all six are reproducible from `get_data.py`.
 - **+6–8h — deploy one artefact.** A Streamlit app over the ICP model where a visitor picks a
   region and SIC code and gets a ranked account list. **For Track 3 this is the highest-value item
@@ -424,7 +544,8 @@ ranking by probability alone does worse than random.**
 
 ### 📊 [Is Tesla's valuation justified?](./financial-analysis/) — comparative thesis
 A structured view on three EV manufacturers using Situation–Complication–Implication–Risk.
-**<corrected multiples>**
+**The market pays ~189× earnings for Tesla against ~18× for BYD and ~6× for Ford — while Tesla
+generates the least free cash flow of the three.**
 ```
 
 Three deliberate choices. Every project title is a **question a commercial person would ask**, not
@@ -441,9 +562,12 @@ commercial readers are hiring for exactly that step and will not infer it on you
 
 **Drafted lines, from what's verified in the repo:**
 
-- **Financial Analysis** — *not yet writable.* Correct the currency error and reconcile the three
-  P/E figures first, then: *"The market pays ~188× earnings for Tesla against ~18× for BYD, despite
-  BYD generating more free cash flow and converting earnings to cash more reliably."*
+- **Financial Analysis** — ~~*not yet writable*~~ **written, 6 Sep**, and not as drafted. The
+  currency fix showed Ford, not BYD, to be the largest cash generator, so the drafted clause
+  "BYD generating more free cash flow" would have carried the original error forward in softer
+  language. The line that survives contact with the corrected data:
+  *"The market pays ~189× earnings for Tesla against ~18× for BYD and ~6× for Ford — while Tesla
+  generates the least free cash flow of the three."* See §0.2.
 - **Churn** — ~~*not yet writable*~~ **written, 6 Sep.** AUC 0.744 is not a commercial answer; the
   cost sweep and the swept-rule benchmark produce one. See §0.1 for the line.
 - **E-commerce** — verified in notebook 3, with one figure corrected on 6 Sep: *"Returning customers
@@ -451,7 +575,7 @@ commercial readers are hiring for exactly that step and will not infer it on you
   drive 80% of revenue."* (The 21% came from a denominator that double-counted products — see §0.1.)
 - **ICP model** — to be written.
 
-**One of your three projects still has no line 2** (was two; churn now has one). That was a finding under the old brief
+**All three existing projects now have a line 2** (was two missing, then one; Financial Analysis closed the last on 6 Sep — only the unbuilt ICP project is outstanding). That was a finding under the old brief
 and it's a sharper one here: for these roles the number *is* the pitch.
 
 ---
@@ -474,10 +598,12 @@ in about twelve hours.
 
 **Track 3 — Solutions Engineer: the only track where it helps today, and the one with the highest
 ceiling.** The technical credibility is real and the instinct for stating limitations honestly is
-a genuine pre-sales asset that most graduates lack entirely. Two things hold it back. The numeric
+a genuine pre-sales asset that most graduates lack entirely. Two things held it back. ~~The numeric
 contradictions are disqualifying in a role whose whole function is being the person whose numbers
-are right — three different P/E figures for one company is the specific failure this job prevents.
-And notebooks are the wrong medium: this reader wants something that runs and a person who can
+are right — three different P/E figures for one company is the specific failure this job prevents.~~
+**Closed 6 Sep (§0.2)** — and the fix improved on the brief: the corrected analysis states which of
+its own conclusions changed and why, which is a stronger pre-sales signal than never having erred.
+The remaining constraint is that notebooks are the wrong medium: this reader wants something that runs and a person who can
 explain it. Fix the numbers, deploy one thing, record one Loom, and this becomes a strong
 application.
 
@@ -485,8 +611,8 @@ application.
 be. The problem is that it's a **portfolio for a job you're no longer applying for.** Fixing the
 defects makes it honest; only the ICP project makes it relevant.
 
-**One line:** delete `Customer_Segmentation` today, fix the numbers in Financial Analysis this
-week, then build the Companies House target-account model — and aim the applications at contech
+**One line:** ~~delete `Customer_Segmentation` today, fix the numbers in Financial Analysis this
+week,~~ **both done (§0.1, §0.2)** — now build the Companies House target-account model — and aim the applications at contech
 and proptech companies, where your engineering background is a commercial advantage rather than a
 detour to explain away.
 
