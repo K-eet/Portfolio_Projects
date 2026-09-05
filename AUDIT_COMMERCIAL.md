@@ -4,6 +4,7 @@
 **Supersedes:** `AUDIT.md` (written for analyst roles — kept, not deleted, because the factual
 inventory in §1 there is still accurate and you may have already acted on parts of it).
 **Scope:** audit only. No files edited or created except this one.
+**Progress:** see **§0.1** — e-commerce/churn items closed 6 September 2026.
 
 Three target tracks:
 - **Track 1 — Pure Outbound.** SDR / BDR / Inside Sales / Commercial Development Rep.
@@ -41,6 +42,71 @@ terms is a liability under any job title), delete the 2-byte `.pbix`, delete the
 commit the two untracked churn notebooks, fix the root README's "two projects" over three folders.
 Those cost about two hours and remain the highest-leverage two hours available.
 
+> **Status, 6 Sep 2026:** all of these are done except the root README, which the owner is holding
+> until all three projects are finished. See **§0.1** for the full progress log.
+
+---
+
+## 0.1 Progress log — 6 September 2026
+
+*Added after the audit was written. Covers the **e-commerce / churn project only**. Financial
+Analysis is being worked separately and nothing below reports on it.*
+
+| Audit item | Raised in | Status |
+|---|---|---|
+| Churn steps 3–4 — the ROI case | §3, §6.2 (hours 12–15) | **Done.** `6. cost_and_benchmark.ipynb`, committed `96ce60d` |
+| Notebooks 1 & 2 blank | §3, §6.3 | **Done.** All six notebooks now run top to bottom against one regenerated dataset, no errors |
+| E-commerce README stale figures | §3 | **Done.** See the correction below — one figure was right, two were invented |
+| Commit the churn notebooks | §0, §6.1 item 3 | **Done.** 4 and 5 committed earlier; 6 committed with this work |
+| Delete `Customer_Segmentation/`, `.pbix`, orphan SQL | §0, §6.1 items 1–2 | **Done** in an earlier commit; verified absent from the working tree and from `git ls-files` |
+
+### The churn result — §7's missing line 2 is now writable
+
+> With an unlimited contact budget the model is worth **£0.23 per customer** over a *tuned* silence
+> rule — nothing. Under a budget of 100 contacts, ranking by predicted probability **×** value at
+> risk returns a median **£7,132** against **£4,022** for the rule, while ranking by probability
+> alone does worse than choosing at random.
+
+The audit predicted the useful finding would be "the money gap between model and rule", and allowed
+that the gap might favour the rule. It does — £136 across 587 customers, surviving no combination of
+contact cost and save rate tested. What the audit did not anticipate is the second half: the gap
+only appears under a **contact budget**, and only once probabilities are multiplied by customer
+value. For a commercial reader that is the sharper sentence — *the classifier isn't the product,
+the prioritised call list is* — and it is a better answer than the marginal win §6.2 hoped for.
+
+Note also what the rule was benchmarked at. Against the 90-day rule **as originally written down**,
+the model appears to win by £13,690. That number is real and would have been easy to report. It is
+not a win for the model; it is a win for contacting more people, which the rule does just as well
+once its own threshold is swept. Sweeping both sides is what turns a £13,690 illusion into a £136
+fact.
+
+### On the stale README figures — the audit was half right
+
+**399,689 is correct.** It was unverifiable only because notebooks 1 and 2 had never been run; the
+chain now reproduces it exactly (541,909 → −135,080 null CustomerID → −5,225 duplicates → −1,915
+invalid StockCodes). **41.3% and 42.5% were invented** — no such figures exist anywhere in the
+analysis. The real segmentation is Champions 40.7% / At Risk 40.7% / Big Spenders 9.3% / Loyal 9.3%,
+and it carries a better line than the one it replaced: the 40.7% Champions produce **83.6%** of
+revenue while the equally sized At Risk group produce **5.8%**.
+
+### Two defects this audit did not catch, both in `3. EDA.ipynb`
+
+1. **Currency.** The project's headline retention number printed as `$416.35` / `$2,866.96` on a UK
+   retailer's GBP data — 8 occurrences across 5 cells. This is the same defect class §0 calls
+   *disqualifying*, sitting inside the one number §7 lists as verified. Now GBP throughout.
+2. **Double-counted products.** The Pareto analysis grouped by `(StockCode, Description)`, so any
+   product whose description varies between transactions counted more than once — 3,891 groups
+   against 3,659 real StockCodes, contradicting the same notebook's own header four cells earlier.
+   That count is the *denominator* of the headline, so **§7's drafted e-commerce line is wrong:
+   21.4% of products drive 80% of revenue, not 21%.** Fixed in the notebook, with an assertion
+   pinning the row count to `df['StockCode'].nunique()`, and corrected in the README.
+
+### Still open, unchanged by this work
+
+`git mv` to `ecommerce-analytics` (§6.1 item 4) · the root README rewrite (§6.1 item 5, §7) —
+deferred by the owner until all three projects are finished · the ICP project (§4) · the deployed
+artefact and the Loom (§6.3) · everything in Financial Analysis.
+
 ---
 
 ## 1. Inventory — what changed in the reading
@@ -51,7 +117,7 @@ matter. Re-sorted by value to these three tracks:
 | Asset | Old rank | New rank | Why |
 |---|---|---|---|
 | `04_investment_thesis.ipynb` — SCIR prose | Mid | **1st** | Structured persuasive writing. This is the skeleton of a discovery call and an outbound email. |
-| Churn notebooks 4 & 5 (untracked) | 2nd | **2nd** | A retention/revenue question with an explicit cost framing. Commercially legible. |
+| Churn notebooks 4, 5 & 6 (**now committed**) | 2nd | **2nd** | A retention/revenue question with an explicit cost framing. Commercially legible. |
 | `03_deep_dive.ipynb` earnings-quality reasoning | Mid | **3rd** | Shows you interrogate a number rather than report it. |
 | `edgar_utils.py` + tests | **1st** (best engineering) | **4th** | Real engineering, but no buyer, founder or sales manager will ever read it. Keep; stop investing. |
 | `3. EDA.ipynb` | Mid | Mid | Only e-commerce notebook with visible charts. Source of your one usable number. |
@@ -128,6 +194,15 @@ He does not conclude "can't do the work." He concludes **"starts things."** For 
 Associate that is close to the only disqualifying trait, because the job is being handed the
 things nobody else has time to finish.
 
+> **Status, 6 Sep 2026.** That paragraph is the assessment as written on 8 August; it is left
+> standing rather than edited, because the point of it is what a founder saw on that date. Of the
+> seven defects it lists, five are now cleared: the 404ing dashboard file and the customer ledger
+> are deleted, the two blank e-commerce notebooks run, the e-commerce README no longer contradicts
+> its notebooks, and the best notebooks are committed. Two remain, both in Financial Analysis: the
+> six blank Plotly charts and the headline number wrong by ~7×. **The specific charge — "starts
+> things" — is the one this work was aimed at**, and it is answered by finishing the churn
+> sequence rather than by any single fix in it.
+
 The material underneath would genuinely impress this reader — breadth from equities to retail
 churn to SEC filings, self-taught, with a structured commercial framework applied on top. He can't
 see it in ninety seconds, and the surface tells him not to look.
@@ -174,11 +249,11 @@ today. With the §6 fixes it becomes a genuine advantage.
 | `02_visualization.ipynb` (3 cells) | **CUT** (unchanged) | Padding. |
 | **Numeric contradictions across Financial Analysis** | **FIX FIRST** | Was #1 by credibility. Now #1 by a wider margin. |
 | **SCIR prose — proofread and reconcile** | **FIX — new, high** | This is your writing sample for all three tracks. 45 minutes. |
-| Churn steps 3–4 | **FINISH** ⟵ *reversed* | An ROI case with a do-nothing benchmark. Directly transferable to a business case. |
+| Churn steps 3–4 | **DONE** (6 Sep) ⟵ *was: FINISH, reversed* | An ROI case with a do-nothing benchmark. Directly transferable to a business case. |
 | Berkshire new-build premium | **CONDITIONAL** ⟵ *demoted* | Only if targeting proptech/contech. |
 | `edgar_utils.py` + EDGAR pipeline | **ARCHIVE in place** (unchanged) | Good work, zero commercial legibility. Don't extend it. |
-| Notebooks 1 & 2 blank | **FINISH** (30 min, unchanged) | Cheap. |
-| E-commerce README stale figures | **FINISH** (unchanged) | 399,689 / 41.3% / 42.5% appear nowhere in the repo. |
+| Notebooks 1 & 2 blank | **DONE** (6 Sep) | Cheap, and it turned 399,689 from an assertion into a reproducible figure. |
+| E-commerce README stale figures | **DONE** (6 Sep) | 399,689 verified once the notebooks were run; 41.3% / 42.5% did not exist and were replaced. See §0.1. |
 | Root README | **REWRITE — commercially** | See §7. The current framing actively argues for a different job. |
 | **A deployed, clickable artefact** | **ADD — new** | Essential for Track 3, valuable for Track 2, harmless for Track 1. |
 | **A commercially-framed project** | **ADD — new, highest value** | See §4. The single biggest gap for all three tracks. |
@@ -275,9 +350,9 @@ Assumes the ~15 hours from your original brief; §6.3 covers 30–45.
 
 | # | Task | Min |
 |---|---|---|
-| 1 | Delete `Customer_Segmentation/` and purge from history (`AUDIT.md` §8). | 40 |
-| 2 | Delete the 2-byte `.pbix` and `sql_queries_eda.sql`; strip both from the e-commerce README including pipeline stages 4 and 5. | 20 |
-| 3 | `git add` the two churn notebooks — still untracked, still invisible. | 5 |
+| 1 | ~~Delete `Customer_Segmentation/` and purge from history (`AUDIT.md` §8).~~ **DONE** | 40 |
+| 2 | ~~Delete the 2-byte `.pbix` and `sql_queries_eda.sql`; strip both from the e-commerce README.~~ **DONE** (the README's pipeline diagram now documents the real stages 4–6) | 20 |
+| 3 | ~~`git add` the two churn notebooks — still untracked, still invisible.~~ **DONE**, and notebook 6 with them. | 5 |
 | 4 | `git mv "Ecommerce Data Analytics" ecommerce-analytics` | 5 |
 | 5 | Rewrite the root README on the §7 structure. **Drop the "BI Analyst application to Shopee" framing** — under these tracks it is an argument for a different job. | 30 |
 | 6 | Confirm the BYD CNY/USD diagnosis yourself in notebook 05. | 20 |
@@ -289,7 +364,7 @@ Assumes the ~15 hours from your original brief; §6.3 covers 30–45.
 | **2–4** | **Fix every numeric contradiction in Financial Analysis.** Currency error; reconcile Tesla's P/E to one figure across notebooks 04, 05 and the README; correct the ROA 8.2 → 9.4pp; fix "barely above 1"; reconcile or remove the ranking. |
 | **4–5** | **Proofread the SCIR notebook properly.** Typos, capitalisation, doubled spaces. Read it aloud. This is your writing sample. |
 | **5–12** | **Build the Companies House ICP project** (§4), including the three example outbound emails. Construction SIC codes if going the contech route. |
-| **12–15** | **Finish churn steps 3–4** as an ROI case: threshold sweep, expected £ against the no-model 90-day rule, one chart, one sentence of result. Publish it even if the model loses to the rule — "the simple rule wins, so use the rule" is a strong commercial finding. |
+| **12–15** | **DONE (6 Sep).** ~~Finish churn steps 3–4~~ as an ROI case: threshold sweep, expected £ against the no-model 90-day rule, one chart, one sentence of result. Publish it even if the model loses to the rule — "the simple rule wins, so use the rule" is a strong commercial finding. |
 
 **Deliberately not in the 15 hours:** re-running the blank e-commerce notebooks, exporting the
 Plotly charts, and the Berkshire project. All were in the previous plan; all lose to the ICP
@@ -299,7 +374,7 @@ project and the churn ROI case under this brief.
 
 - **+3h — export the Plotly charts to PNG** (`AUDIT.md` §8), so Financial Analysis stops showing
   six blank gaps.
-- **+30 min — run the two blank e-commerce notebooks** and commit with outputs.
+- ~~**+30 min — run the two blank e-commerce notebooks** and commit with outputs.~~ **DONE (6 Sep)** — and notebooks 3, 4 and 5 re-run with them, so all six are reproducible from `get_data.py`.
 - **+6–8h — deploy one artefact.** A Streamlit app over the ICP model where a visitor picks a
   region and SIC code and gets a ranked account list. **For Track 3 this is the highest-value item
   in this document after the fixes** — Solutions Engineering is demonstrated by a thing that runs,
@@ -343,7 +418,9 @@ with three outbound emails written from it.**
 
 ### 📉 [Is it worth paying to keep a customer?](./ecommerce-analytics/) — churn and retention
 Which customers are about to stop buying, and does contacting them pay for itself?
-**<result once step 3 is done — the £ gap between the model and a do-nothing 90-day rule>**
+**No: against a tuned silence rule the model is worth £0.23 a customer. But given only 100 calls to
+make, ranking by probability × value at risk returns £7,132 against the rule's £4,022 — while
+ranking by probability alone does worse than random.**
 
 ### 📊 [Is Tesla's valuation justified?](./financial-analysis/) — comparative thesis
 A structured view on three EV manufacturers using Situation–Complication–Implication–Risk.
@@ -367,13 +444,14 @@ commercial readers are hiring for exactly that step and will not infer it on you
 - **Financial Analysis** — *not yet writable.* Correct the currency error and reconcile the three
   P/E figures first, then: *"The market pays ~188× earnings for Tesla against ~18× for BYD, despite
   BYD generating more free cash flow and converting earnings to cash more reliably."*
-- **Churn** — *not yet writable*, and now worth writing, which is the reversal. AUC 0.744 is not a
-  commercial answer. Step 3 produces one.
-- **E-commerce** — the one line available today, verified in notebook 3: *"Returning customers are
-  worth 6.9× a one-time buyer (£2,867 vs £416); 21% of products drive 80% of revenue."*
+- **Churn** — ~~*not yet writable*~~ **written, 6 Sep.** AUC 0.744 is not a commercial answer; the
+  cost sweep and the swept-rule benchmark produce one. See §0.1 for the line.
+- **E-commerce** — verified in notebook 3, with one figure corrected on 6 Sep: *"Returning customers
+  are worth 6.9× a one-time buyer (£2,867 vs £416) and generate 92.8% of revenue; 21.4% of products
+  drive 80% of revenue."* (The 21% came from a denominator that double-counted products — see §0.1.)
 - **ICP model** — to be written.
 
-**Two of your three projects currently have no line 2.** That was a finding under the old brief
+**One of your three projects still has no line 2** (was two; churn now has one). That was a finding under the old brief
 and it's a sharper one here: for these roles the number *is* the pitch.
 
 ---
