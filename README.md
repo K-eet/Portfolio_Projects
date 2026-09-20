@@ -1,6 +1,13 @@
 # Portfolio projects
 
-Three end-to-end projects, each taking a question from raw data to a decision someone could act on.
+Four end-to-end projects, each taking a question from raw data to a decision someone could act on.
+
+**[Student Engagement Analysis](Student%20Engagement%20Analysis/)** — Is early activity on an
+online course site a usable early warning sign for withdrawal? Logistic and linear regression over
+the Open University Learning Analytics Dataset: 32,593 student records across 22 module-presentations,
+with the half of withdrawals whose engagement window was cut short by the withdrawal itself held out
+of the sample rather than left to overstate the result.
+*Python, statsmodels, odds ratios with confidence intervals.*
 
 **[UK Tech Outbound](UK%20Tech%20Outbound/)** — Which UK property developers should a sales team call
 first? An ideal-customer-profile and target-account model over the Companies House public register:
