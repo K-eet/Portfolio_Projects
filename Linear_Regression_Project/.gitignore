@@ -1,0 +1,15 @@
+# Data is not committed. See README for the download step.
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Working notes for Claude Code, not part of the deliverable.
+CLAUDE.md
