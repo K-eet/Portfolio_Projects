@@ -7,7 +7,7 @@ first? An ideal-customer-profile and target-account model over the Companies Hou
 5.7 million companies narrowed to a segment, ranked by a transparent four-component score, and ending
 in three outbound emails that each cite a specific fact about the company they are addressed to.
 **136,542 sellable accounts ranked, with 19,565 sibling SPVs folded into their parent developers.**
-*Python, pandas, 42 tests.*
+*Python, pandas, 42 tests, and an interactive Streamlit app you can run locally.*
 
 **[Ecommerce Data Analytics](Ecommerce%20Data%20Analytics/)** — Is it worth paying to keep a customer?
 ETL pipeline design, customer lifetime value modelling and churn analysis on transactional retail data,

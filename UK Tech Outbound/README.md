@@ -10,10 +10,27 @@ developers, the segment [LandTech](https://land.tech), Orbital and Searchland co
 the vendor matters — "good prospect" is meaningless on its own, and every weighting decision in
 this repository is an argument about *this* buyer.
 
-**Try it:** [`app.py`](app.py) is an interactive version of the ranking. Move the four weights and
-the call list re-orders, with each account's rise or fall against the default weights; narrow the
-segment by postcode area, activity and age; and see, for any account, why it ranks where it does
-and which facts an opening line could cite. Run it with `streamlit run app.py`.
+## Try it yourself
+
+[`app.py`](app.py) is an interactive version of the ranking. Move the four weights and the call
+list re-orders, with each account's rise or fall against the default weights; narrow the segment
+by postcode area, activity and age; and see, for any account, why it ranks where it does and which
+facts an opening line could cite.
+
+It runs from the ranked list already committed in `outputs/`, so there is nothing to download
+first. It needs Python 3.11 or later.
+
+```bash
+git clone https://github.com/K-eet/Portfolio_Projects.git
+cd "Portfolio_Projects/UK Tech Outbound"
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+It opens in your browser at `http://localhost:8501`. To rebuild the ranking from the raw register
+instead, see [Running it](#running-it).
 
 ---
 
