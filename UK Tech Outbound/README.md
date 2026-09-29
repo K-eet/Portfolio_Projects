@@ -10,27 +10,8 @@ developers, the segment [LandTech](https://land.tech), Orbital and Searchland co
 the vendor matters — "good prospect" is meaningless on its own, and every weighting decision in
 this repository is an argument about *this* buyer.
 
-## Try it yourself
-
-[`app.py`](app.py) is an interactive version of the ranking. Move the four weights and the call
-list re-orders, with each account's rise or fall against the default weights; narrow the segment
-by postcode area, activity and age; and see, for any account, why it ranks where it does and which
-facts an opening line could cite.
-
-It runs from the ranked list already committed in `outputs/`, so there is nothing to download
-first. It needs Python 3.11 or later.
-
-```bash
-git clone https://github.com/K-eet/Portfolio_Projects.git
-cd "Portfolio_Projects/UK Tech Outbound"
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-It opens in your browser at `http://localhost:8501`. To rebuild the ranking from the raw register
-instead, see [Running it](#running-it).
+There is also an interactive version you can run locally, where you set the weights yourself —
+see [Try it yourself](#try-it-yourself).
 
 ---
 
@@ -142,6 +123,28 @@ this list a busy developer and a distressed one look the same.
 | `get_data.py` · `pipeline.py` · `chart.py` | Download and filter · score and rank · the one chart |
 | `app.py` | The interactive ranking — re-weights `outputs/scored_segment.csv` with `scoring.total_score` |
 | `test_scoring.py` · `test_pipeline.py` | **42 tests**, each named for the commercial case it encodes |
+
+## Try it yourself
+
+[`app.py`](app.py) is an interactive version of the ranking. Move the four weights and the call
+list re-orders, with each account's rise or fall against the default weights; narrow the segment
+by postcode area, activity and age; and see, for any account, why it ranks where it does and which
+facts an opening line could cite.
+
+It runs from the ranked list already committed in `outputs/`, so there is nothing to download
+first. It needs Python 3.11 or later.
+
+```bash
+git clone https://github.com/K-eet/Portfolio_Projects.git
+cd "Portfolio_Projects/UK Tech Outbound"
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+It opens in your browser at `http://localhost:8501`. To rebuild the ranking from the raw register
+instead, see below.
 
 ## Running it
 
