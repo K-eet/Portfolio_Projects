@@ -146,6 +146,20 @@ absorbs the difference between them but does not test whether the engagement
 association itself differs by start month. Neither would change the causal
 standing of the result.
 
+## So what would you do about it?
+
+For a university, flag the students with the least first-month activity for a
+personal check-in from a tutor: the lowest fifth, where the pass-rate gap is
+sharpest, and above all the 4.3% who record no clicks at all. The flag is
+available by day 30 and a check-in is cheap.
+
+Do not set click targets. The association is not causal, and chasing clicks
+would move the measure without necessarily moving the outcome. Instead, roll the
+check-ins out module by module, so the next analysis can compare flagged students
+who were contacted with those not yet reached and say whether the intervention
+works, which this one cannot. And because the students who leave before day 30
+are outside this data, test whether an earlier flag, at day 14, reaches them.
+
 ## How to reproduce the analysis
 
 Requires Python 3.12 or later.

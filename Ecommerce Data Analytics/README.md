@@ -175,8 +175,19 @@ so a scarce budget spent on them protects very little money, and no accuracy met
 And the model only earns its keep **once its output is multiplied by what each customer is
 worth**, at which point it beats the rule in 25 of 30 splits by a median £3,233.
 
-The practical read: if the budget is unconstrained, use the rule and skip the model. If it is
-constrained, use the model — but rank by expected value, never by probability.
+## So what would you do about it?
+
+It depends on how much contact capacity the business has, so the answer is a rule for each case:
+
+- **Contact is cheap and unlimited (email, say): use the rule and don't build the model.**
+  Contacting everyone silent past the swept threshold captures almost all of the value; the
+  model adds £0.23 a customer, which does not pay for its upkeep.
+- **Contact is scarce (calls, account managers): use the model, but choose who to contact by
+  predicted probability × value at risk.** With 100 calls that returned a median £7,132
+  against the rule's £4,022. Choosing by churn probability alone returned less than picking
+  customers at random, so this is the step not to skip.
+- **Either way, set the cut-off from costs, not from 50%.** Under the costs assumed in notebook
+  6, contacting a median customer pays off above a 2.3% churn probability.
 
 ## Key Business Insights
 

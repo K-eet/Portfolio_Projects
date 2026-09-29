@@ -95,6 +95,18 @@ looks identical to a busy one on this signal. Filing health catches the subset t
 a company can be distressed and still file on time. This score prioritises a call list — it is not a
 qualification decision, and shouldn't be used as one where the vendor carries payment risk.
 
+## So what would you do about it?
+
+Give the top 25 to one rep as a call order, not a qualified pipeline, and open each call with the
+fact the list surfaced — the live charges, or the number of schemes behind the SPVs — the way the
+three emails in notebook 4 do, rather than with a generic pitch.
+
+Then log every call's outcome against the four component scores. The weights here are hand-set
+because nobody has labelled which developers buy; a few weeks of call outcomes is that label. The
+components that predict a meeting earn more weight, the ones that don't earn less, and the score
+stops being an argument and becomes a measurement. Keep payment-risk checks as a separate step: on
+this list a busy developer and a distressed one look the same.
+
 ## Layout
 
 | File | |
