@@ -10,6 +10,11 @@ developers, the segment [LandTech](https://land.tech), Orbital and Searchland co
 the vendor matters — "good prospect" is meaningless on its own, and every weighting decision in
 this repository is an argument about *this* buyer.
 
+**Try it:** [`app.py`](app.py) is an interactive version of the ranking. Move the four weights and
+the call list re-orders, with each account's rise or fall against the default weights; narrow the
+segment by postcode area, activity and age; and see, for any account, why it ranks where it does
+and which facts an opening line could cite. Run it with `streamlit run app.py`.
+
 ---
 
 ## The scoring logic, in five lines
@@ -118,6 +123,7 @@ this list a busy developer and a distressed one look the same.
 | `config.py` | Every targeting decision, in one file |
 | `scoring.py` | The four components as pure functions |
 | `get_data.py` · `pipeline.py` · `chart.py` | Download and filter · score and rank · the one chart |
+| `app.py` | The interactive ranking — re-weights `outputs/scored_segment.csv` with `scoring.total_score` |
 | `test_scoring.py` · `test_pipeline.py` | **42 tests**, each named for the commercial case it encodes |
 
 ## Running it
@@ -130,6 +136,8 @@ python get_data.py     # downloads 493 MB, filters to data/segment.csv — once
 python pipeline.py     # scores and ranks — seconds
 python chart.py        # writes outputs/segment_age.png
 python -m pytest -q    # 42 passed
+
+streamlit run app.py   # the interactive ranking; needs only outputs/scored_segment.csv
 ```
 
 `get_data.py` needs re-running only when the *segment definition* changes (SIC codes or geography).
