@@ -1,4 +1,4 @@
-# Which 25 UK property developers should a sales team call first?
+# [WIP 11/10/26] Which 25 UK property developers should a sales team call first?
 
 An ideal-customer-profile and target-account model built on the Companies House public register.
 It takes 5.7 million UK companies, narrows them to a defined segment, ranks that segment by how
