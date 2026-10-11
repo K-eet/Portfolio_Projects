@@ -1,52 +1,50 @@
-# [WIP 11/10/26] Which 25 UK property developers should a sales team call first?
+# Which 25 UK property developers should a sales team call first?
 
-An ideal-customer-profile and target-account model built on the Companies House public register.
-It takes 5.7 million UK companies, narrows them to a defined segment, ranks that segment by how
-good a prospect each account is, and ends with three outbound emails written to the top three —
-each citing a specific fact from the data about that company.
+This project builds a ranked call list from the Companies House public register. It starts with
+5.7 million UK companies, filters them down to London property developers, scores each one as a
+sales prospect, and ends with three outbound emails to the top three. Each email opens with a fact
+about that company taken from the data.
 
-**Worked example:** a land-sourcing and planning-intelligence product sold to UK property
-developers, the segment [LandTech](https://land.tech), Orbital and Searchland compete in. Naming
-the vendor matters — "good prospect" is meaningless on its own, and every weighting decision in
-this repository is an argument about *this* buyer.
+The example client is a company selling land-sourcing and planning software to property
+developers, the market [LandTech](https://land.tech), Orbital and Searchland are in. The scoring
+choices below are made for that buyer and would be different for another one.
 
-There is also an interactive version you can run locally, where you set the weights yourself —
-see [Try it yourself](#try-it-yourself).
+There is also an interactive version where you can set the weights yourself. See
+[Running it](#running-it).
 
----
+## How the score works
 
-## The scoring logic, in five lines
-
-| Component | Weight | Question it answers |
+| Component | Weight | What it measures |
 |---|---|---|
-| **Industry fit** | 35 | Is this the right *sort* of company? Graded by SIC code, not binary. |
-| **Lifecycle fit** | 25 | Are they at the stage where this problem bites? A trapezoid over company age. |
-| **Commercial substance** | 25 | Can they actually buy anything? Accounts size class plus live development finance. |
-| **Filing health** | 15 | Would a salesperson waste a morning here? Overdue filings as a disqualifier. |
+| **Industry fit** | 35 | How close the company's SIC code is to property development. Graded from 1.0 down to 0.25. |
+| **Lifecycle fit** | 25 | Company age. Zero under 2 years, full marks from 4 to 9, falling to zero at 20. |
+| **Commercial substance** | 25 | Whether the company is big enough to buy: its accounts type, plus outstanding mortgage charges. |
+| **Filing health** | 15 | Whether filings are up to date. Overdue or dormant companies lose points. |
 
-Each component scores 0–1; the weights sum to 100, so the total needs no normalisation.
+Each component scores between 0 and 1, and the weights add up to 100, so the total is a score out
+of 100.
 
-**It is a weighted rank, not a model, and that is a decision rather than a shortcut.** Nobody has
-labelled which of these companies actually bought software, so there is no target variable to train
-against — a fitted model here would be a confident-looking guess carrying a validation score that
-measures nothing. A transparent score a sales team will argue with beats an opaque one they quietly
-ignore.
-
+The weights are set by hand. There is no data on which of these companies have bought software, so
+there is nothing to train a model on. A hand-weighted score also has the advantage that a sales
+team can see why an account ranks where it does and disagree with it.
 ## Results
 
 | | |
 |---|---|
 | Companies scanned | 5,689,367 |
 | Passed the segment filter | 156,107 |
-| Sibling SPVs folded into parents | 19,565 |
-| **Sellable accounts ranked** | **136,542** |
+| Sibling companies merged into their group | 19,565 |
+| **Accounts ranked** | **136,542** |
 | Distinct scores | 807 |
+
+The segment filter keeps a company if it is active, registered in a London postcode area, and has
+at least one of six relevant SIC codes.
 
 ![Age distribution of the segment against the scoring window](outputs/segment_age.png)
 
 **Top 5 accounts:**
 
-| # | Company | Age | Accounts | Live charges | Group | Score |
+| # | Company | Age | Accounts | Live charges | Group size | Score |
 |---|---|---|---|---|---|---|
 | 1 | Sibner Group Ltd | 4.3 | GROUP | 3 | 2 | 100.0 |
 | 2 | DSBL HMO Portfolio Limited | 6.2 | GROUP | 4 | 32 | 100.0 |
@@ -54,85 +52,71 @@ ignore.
 | 4 | Urban&Civic Corby Limited | 8.9 | FULL | 8 | 42 | 98.4 |
 | 5 | KHK One Limited | 5.9 | FULL | 4 | 4 | 98.4 |
 
-Full ranking in [`outputs/scored_segment.csv`](outputs/), top 25 in
+The full ranking is in [`outputs/scored_segment.csv`](outputs/) and the top 25 is in
 [`outputs/top_25.csv`](outputs/).
 
-## Two problems found by running it
+## Two problems I found in the output
 
-Both were discovered by looking at the output rather than by planning, and both are documented in
-the notebooks rather than quietly fixed.
+**4,401 companies tied at exactly 100.** The first version scored industry, lifecycle and filing
+health only. Those three say whether a company is the right kind of company, but not whether it is
+big enough to have a budget, so thousands of companies got full marks and the top 25 was
+effectively in alphabetical order. I added commercial substance, which uses the accounts type as a
+measure of size and outstanding mortgage charges as a sign of active development. That cut the tie
+from 4,401 companies to 2.
 
-**4,401 companies tied at exactly 100.0.** The first version scored industry, lifecycle and filing
-health only. All three describe whether a company is the *right sort*; none describe whether it is
-big enough to have a budget. A "top 25" drawn from a 4,401-way tie is alphabetical noise wearing the
-costume of a ranking. Adding commercial substance — the statutory accounts size class, plus
-outstanding mortgage charges as a live-development-finance signal — cut the tie from 4,401 to 2.
+**The top of the list was one developer several times over.** `PEARL MK 340`, `PEARL MK 330` and
+`PEARL LUTTERWORTH 4400` are all registered at the same Mayfair address. Developers set up a
+separate company for each scheme to keep its finance separate, so the register is full of these
+special-purpose vehicles (SPVs). An SPV has no staff and no budget, so it is not something you can
+sell to. I merged companies that share both the first word of their name and their registered
+address, which folded 19,565 companies into their groups. The size of each group turned out to be
+useful in its own right: a developer with 42 SPVs is running about 42 schemes.
 
-**The top of the list was one developer, five times.** `PEARL MK 340`, `PEARL MK 330`,
-`PEARL LUTTERWORTH 4400` — all at one Mayfair address. Developers incorporate one company per
-scheme to ring-fence finance, so the register is full of special-purpose vehicles. You cannot sell
-software to an SPV: it has no staff, no budget and no systems. Collapsing on name stem *and*
-registered address folded 19,565 siblings into their parents — and the sibling count turned out to
-be the most useful field in the output, because a developer running 42 SPVs is running 42 schemes.
+## Mortgage charges count as a good sign
 
-## A domain judgement worth flagging
+A mortgage charge is debt secured against a company's assets. Lenders and credit agencies read a
+high number of charges as a risk, and on a credit report five outstanding charges is bad news.
 
-**Outstanding mortgage charges are treated as a positive signal. This inverts the standard
-convention, and the inversion is deliberate.**
+This project reads them the other way. Property development is funded by development finance, so
+each live charge roughly corresponds to a site being built now. A developer with five live charges
+is busy, which makes it a better sales prospect, even though it is also a worse credit risk. A
+developer with none is usually dormant, very small, or holding land it is not building on.
 
-Conventionally, charges registered at Companies House are a risk marker — debt secured against
-company assets, ranking any new lender behind existing secured creditors. Credit reference agencies
-read a rising charge count as rising leverage, and lenders are measurably less willing to extend
-further credit to a company carrying several. On a credit report, five outstanding charges is bad
-news.
+The cost of this choice is that an over-leveraged developer close to administration looks the same
+as a busy one. Filing health catches the ones that have stopped filing, but a company can be in
+trouble and still file on time. The score is for deciding who to call first. It should not be used
+to decide whether a customer can pay.
 
-But this is not a credit assessment. The question here is *is this company worth an hour of a
-salesperson's time*, not *will this company repay a loan* — and charges point in opposite directions
-for those two questions. Development finance is how development is funded: each live charge roughly
-corresponds to a site being built right now. **A developer with five live charges is a worse credit
-risk and a better prospect, and both are true simultaneously.** One with none is usually dormant,
-tiny, or sitting on land it isn't developing.
+## What I would do with it
 
-The cost of the inversion, stated plainly: an over-leveraged developer heading for administration
-looks identical to a busy one on this signal. Filing health catches the subset that stops filing, but
-a company can be distressed and still file on time. This score prioritises a call list — it is not a
-qualification decision, and shouldn't be used as one where the vendor carries payment risk.
+Give the top 25 to one rep as a call order, and treat it as a list of leads to work through, not
+as qualified pipeline. Open each call with the fact that put the company on the list, such as its
+live charges or the number of schemes behind its SPVs. The three emails in notebook 4 do this.
 
-## So what would you do about it?
+Then record the outcome of every call against the four component scores. After a few weeks those
+outcomes are the data on who buys that the project currently lacks, and the weights can be adjusted
+to match: more weight for the components that predict a meeting, less for the ones that do not.
+Keep credit checks as a separate step, for the reason given above.
 
-Give the top 25 to one rep as a call order, not a qualified pipeline, and open each call with the
-fact the list surfaced — the live charges, or the number of schemes behind the SPVs — the way the
-three emails in notebook 4 do, rather than with a generic pitch.
-
-Then log every call's outcome against the four component scores. The weights here are hand-set
-because nobody has labelled which developers buy; a few weeks of call outcomes is that label. The
-components that predict a meeting earn more weight, the ones that don't earn less, and the score
-stops being an argument and becomes a measurement. Keep payment-risk checks as a separate step: on
-this list a busy developer and a distressed one look the same.
-
-## Layout
+## What's in the repo
 
 | File | |
 |---|---|
-| [`1. data_acquisition.ipynb`](1.%20data_acquisition.ipynb) | The data source, why the bulk file rather than the API, the three segment gates |
-| [`2. scoring_model.ipynb`](2.%20scoring_model.ipynb) | Each component explained and demonstrated, with the reasoning behind every boundary |
-| [`3. target_list.ipynb`](3.%20target_list.ipynb) | The SPV problem, the chart, the ranked top 25 |
-| [`4. outbound_emails.ipynb`](4.%20outbound_emails.ipynb) | Three emails, and why none of them is a mail merge |
-| `config.py` | Every targeting decision, in one file |
-| `scoring.py` | The four components as pure functions |
-| `get_data.py` · `pipeline.py` · `chart.py` | Download and filter · score and rank · the one chart |
-| `app.py` | The interactive ranking — re-weights `outputs/scored_segment.csv` with `scoring.total_score` |
-| `test_scoring.py` · `test_pipeline.py` | **42 tests**, each named for the commercial case it encodes |
+| [`1. data_acquisition.ipynb`](1.%20data_acquisition.ipynb) | The data source, why it uses the bulk file and not the API, and the segment filter |
+| [`2. scoring_model.ipynb`](2.%20scoring_model.ipynb) | Each score component, with examples and the reasoning for each boundary |
+| [`3. target_list.ipynb`](3.%20target_list.ipynb) | The SPV problem, the chart and the ranked top 25 |
+| [`4. outbound_emails.ipynb`](4.%20outbound_emails.ipynb) | The three emails and how each one was written |
+| `config.py` | Every targeting decision: SIC codes, postcodes, age boundaries and weights |
+| `scoring.py` | The four components as plain functions |
+| `get_data.py` | Downloads the register and filters it to the segment |
+| `pipeline.py` | Scores, merges groups and ranks |
+| `chart.py` | Draws the age distribution chart |
+| `app.py` | The interactive ranking |
+| `test_scoring.py` · `test_pipeline.py` | 42 tests |
 
-## Try it yourself
+## Running it
 
-[`app.py`](app.py) is an interactive version of the ranking. Move the four weights and the call
-list re-orders, with each account's rise or fall against the default weights; narrow the segment
-by postcode area, activity and age; and see, for any account, why it ranks where it does and which
-facts an opening line could cite.
-
-It runs from the ranked list already committed in `outputs/`, so there is nothing to download
-first. It needs Python 3.11 or later.
+You need Python 3.11 or later.
 
 ```bash
 git clone https://github.com/K-eet/Portfolio_Projects.git
@@ -140,56 +124,56 @@ cd "Portfolio_Projects/UK Tech Outbound"
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+### The interactive app
+
+```bash
 streamlit run app.py
 ```
 
-It opens in your browser at `http://localhost:8501`. To rebuild the ranking from the raw register
-instead, see below.
+This opens at `http://localhost:8501`. It reads the ranked list already committed in `outputs/`,
+so there is nothing to download first. In the app you can:
 
-## Running it
+- move the four weights and watch the call list re-order, with each account's change in rank
+  against the default weights
+- narrow the list by postcode area, activity and age
+- see why any account ranks where it does, and which facts an opening line could use
+
+### Rebuilding the ranking from the register
 
 ```bash
-python -m venv .venv && .venv/Scripts/activate     # Windows
-pip install -r requirements.txt
-
-python get_data.py     # downloads 493 MB, filters to data/segment.csv — once
-python pipeline.py     # scores and ranks — seconds
+python get_data.py     # downloads 493 MB and writes data/segment.csv
+python pipeline.py     # scores and ranks, takes a few seconds
 python chart.py        # writes outputs/segment_age.png
-python -m pytest -q    # 42 passed
-
-streamlit run app.py   # the interactive ranking; needs only outputs/scored_segment.csv
+python -m pytest -q    # runs the tests
 ```
 
-`get_data.py` needs re-running only when the *segment definition* changes (SIC codes or geography).
-Changing the *weights* does not require it — the filter and the score are deliberately separate
-steps, so re-weighting is a five-second re-run rather than a two-gigabyte one.
+`get_data.py` only needs running again if you change the segment definition (the SIC codes or the
+geography). Changing the weights only needs `pipeline.py`.
 
-## Pointing it at a different market
+## Using it for a different market
 
-Nothing here is specific to property developers except the reasoning. The SIC codes, the geography,
-the age boundaries and the weights all live in `config.py`. Editing that file and re-running
-`get_data.py` produces a target list for construction technology, for horizontal SaaS, or for any
-segment the register can describe. The reasoning is the part that has to be rewritten by hand — and
-it is the part that was worth writing in the first place.
+The SIC codes, postcode areas, age boundaries and weights are all in `config.py`. To build a target
+list for another segment, such as construction technology or general SaaS, edit that file and
+re-run `get_data.py`. The code does not need to change, but the reasoning behind each number does,
+because the current values are argued for property developers specifically.
 
-## What this is not
+## Limitations
 
-Three limits, stated here rather than left for a reader to find:
+1. **No revenue data.** Companies House does not publish turnover for small companies. Size is
+   estimated from the accounts type and the number of charges.
+2. **Registered address is not trading address.** Many companies use a formation agent or a head
+   office as their registered address, so this is a list of developers registered in London, and
+   many of them build elsewhere.
+3. **SIC codes are self-declared.** Nobody audits them, and a company that changed its business
+   years ago may never have updated its entry.
 
-1. **No revenue data.** Companies House publishes no turnover for small companies. Substance is
-   inferred from accounts category and charge count. Those are proxies, not measurements.
-2. **Registered address is not trading address.** Formation agents act as registered office for
-   thousands of companies, so this is a list of *London-registered* developers, not
-   *London-building* ones.
-3. **SIC codes are self-declared and unaudited.** A company that changed business four years ago
-   often never updated the register.
-
-None of these are fatal for the job the list actually does: putting 25 plausible names in front of a
-salesperson in priority order. All three would be fatal if the score were presented as a
-qualification decision rather than a prioritisation one.
+These limits are acceptable for a list that puts 25 plausible names in front of a salesperson in
+priority order. They would not be acceptable if the score were used to qualify customers.
 
 ---
 
 **Data:** [Companies House Free Company Data Product](https://download.companieshouse.gov.uk/en_output.html),
-snapshot `2026-09-01`. Public, no API key, contains public sector information licensed under the
-Open Government Licence v3.0.
+snapshot `2026-09-01`. It is public and needs no API key. Contains public sector information
+licensed under the Open Government Licence v3.0.
