@@ -6,8 +6,8 @@ sales prospect, and ends with three outbound emails to the top three. Each email
 about that company taken from the data.
 
 The example client is a company selling land-sourcing and planning software to property
-developers, the market [LandTech](https://land.tech), Orbital and Searchland are in. The scoring
-choices below are made for that buyer and would be different for another one.
+developers, the market that startups like [LandTech](https://land.tech), [Orbital](https://www.orbital.tech/uk) and [Searchland](https://searchland.co.uk/) are in. The scoring
+choices below are made for these potential buyers and would be different for others.
 
 There is also an interactive version where you can set the weights yourself. See
 [Running it](#running-it).
