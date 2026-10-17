@@ -18,6 +18,8 @@ claim about Tesla's future — FSD, Optimus, energy storage — none of which ap
 statements, and a geopolitical discount applied to BYD that the financials do not support
 on their own.
 
+![Revenue growth against P/E, 2024](outputs/growth_vs_pe.png)
+
 ## Companies
 
 | Company | Ticker | Archetype |
@@ -39,6 +41,8 @@ on their own.
 | FCF Yield (%) | 0.3 | 5.1 | 19.1 |
 | EV/EBITDA | 91.1 | 5.5 | 12.2 |
 
+![Net profit margin, free cash flow and return on assets, 2022–2024](outputs/financial_health.png)
+
 - **Tesla** — Deliberate margin compression from the 2023 price war. Net margin and return
   on assets both roughly halved (−8.2pp and −9.4pp), the latter falling further because the
   asset base grew 48% while net income fell 44%. Highest margin in the set, lowest free cash
@@ -54,6 +58,22 @@ on their own.
 
 Aggregate figures also mask Ford's segment split — a profitable ICE business (Ford Blue,
 Ford Pro) subsidising a loss-making EV division (Model e).
+
+## So what would you do about it?
+
+Rank the three on financial health against price — **BYD, then Ford, then Tesla**, as notebook
+04 argues — and hold each view as a test with a date on it rather than a position to defend:
+
+- **Tesla:** the premium needs 2025 revenue growth back in double digits with margins
+  stabilising above 10%. If the 2025 10-K shows neither, the price is still paying for
+  catalysts the business has not yet produced.
+- **BYD:** size it for policy risk, not financial risk. The case breaks if cash conversion
+  falls below 1.5, or growth drops below 10% while capex stays elevated.
+- **Ford:** never quote the 19.1% FCF yield without the $160.9B of debt beside it. The case
+  strengthens if Model e reaches segment profitability by 2026.
+
+Each of those conditions is checkable against the next annual filing with the pipeline in
+this repo. An analytical exercise, not investment advice.
 
 ## Repository Structure
 
