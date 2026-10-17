@@ -10,6 +10,12 @@ developers, the segment [LandTech](https://land.tech), Orbital and Searchland co
 the vendor matters — "good prospect" is meaningless on its own, and every weighting decision in
 this repository is an argument about *this* buyer.
 
+> **Case study: [Acquirepad UK target accounts](case_studies/acquirepad_uk/).** The same method,
+> applied by hand to a different buyer. 27 UK commercial real estate investors were researched from
+> public sources for Acquirepad, a Berlin data and workflow platform entering the UK. Every score above
+> zero carries a source URL. The output is a [one-page target list](case_studies/acquirepad_uk/outputs/acquirepad_uk_targets.pdf)
+> with a first move for each firm.
+
 ---
 
 ## The scoring logic, in five lines

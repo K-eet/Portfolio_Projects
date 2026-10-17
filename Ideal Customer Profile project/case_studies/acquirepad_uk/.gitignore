@@ -1,0 +1,3 @@
+# The parent project ignores data/ (2 GB Companies House download).
+# This data folder holds the hand-built target list, so it is tracked.
+!data/

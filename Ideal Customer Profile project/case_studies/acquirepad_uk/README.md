@@ -1,0 +1,74 @@
+# Case study: Acquirepad UK target accounts
+
+**The one-page output:** [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf)
+
+## Problem
+
+Acquirepad is one shared data and workflow layer for commercial real estate investors. It runs across
+Investment, Portfolio Management, Asset Management, Property Management, Research, CRM, Letting and data
+rooms. Its named customers are mid-sized German investment and asset managers. It now wants to enter the
+UK. For a founder-led sale, the first question is which UK firms to approach first, how, and why now.
+
+## Method
+
+- **ICP.** Six dimensions, each scored 0 to 3: segment, size, UK deal flow, operating breadth, a recent
+  trigger, and a warm path through a German link. Trigger and warm path carry the most weight (20 of 100
+  each). The weights and rubric are in [icp.md](icp.md).
+- **Research.** 27 candidate firms, from public sources only: press releases, company sites, trade press,
+  stock exchange announcements and job boards. The window is the 12 months to 17 October 2026.
+- **Evidence rule.** Every score above 0 has at least one source URL in the CSV, tagged with the dimension
+  it supports. Anything unverified scores 0 and is listed in the `unverified` column. Named people and
+  known systems need sources too. [score.py](score.py) refuses to rank if any of this is broken.
+- **Customer check.** All 27 firms were checked against the eight customers with published stories on
+  Acquirepad's site: GIEAG, HT Group, GARBE, Hines, Advenis, KRE Group, GPEP and WERTCONTOR. None
+  overlaps. Customers are used as routes in instead: GARBE sold Redevco a Duisburg park in September
+  2026, and Advenis is the reference for French SCPIs. Hines and Advenis are shown as UK expansion
+  accounts.
+- **From list to action.** Each firm has a first move (an entry point, angle or intro route) and, where
+  public, the property systems it runs. Yardi and SAP users matter, because Acquirepad integrates both.
+
+## Output
+
+| File | |
+|---|---|
+| [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf) | One A4 page: three plays to start with, then the top 16 firms with why each fits, its trigger and a first move |
+| [data/uk_targets.csv](data/uk_targets.csv) | All 27 firms: scores, trigger parts, first move, systems, sources and unverified dimensions |
+| [outputs/ranked.csv](outputs/ranked.csv) | The same, ranked |
+
+The page shows 16 firms, the most that fit on one readable A4 page. `make_pdf.py` refuses any cut that
+splits a tie.
+
+```bash
+python -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python score.py       # validate, score, rank
+.venv/bin/python make_pdf.py    # one-page PDF; fails if it runs past one page
+.venv/bin/python -m pytest -q   # 9 tests
+```
+
+## Limits
+
+1. **Zero means "not found", not "absent".** Many zeros are gaps in public evidence. Clipstone, for
+   example, scores 0 on operating breadth only because its in-house functions are not published.
+2. **No data, digital or innovation hires were found.** That trigger part is 0 for every firm. It is the
+   cheapest thing to check on LinkedIn before an email goes out.
+3. **Trade press is often paywalled.** Several facts rest on headlines and summaries. Five firms were
+   spot-checked against their sources (below). The rest were not.
+4. **Some evidence is old or group-level.** Catella APAM's £1.4bn is from 2018. Corum's in-house property
+   management comes from an older interview, NewRiver's from 2022, and Iroko's from a 2022 group document.
+5. **Hand-scored.** Two researchers would not score every row the same. The CSV shows the evidence so
+   that each score can be challenged.
+
+## Spot-check, 17 October 2026
+
+| Firm | Result |
+|---|---|
+| Edmond de Rothschild REIM | Confirmed: Marlow, Stafford and Aberdeen deals, and the £100m target (19 May 2026). The Aberdeen completion date is not stated. |
+| Columbia Threadneedle Real Estate | Confirmed: Hanover merger, £1.5bn, Patrizia chose it after a review (2 July 2026). |
+| Martley Capital | Confirmed: all five facts, including the £500m target and over £110m deployed. |
+| Swiss Life AM UK | The co-CEO change was announced on 1 October 2025 and took effect on 1 January 2026. The Avonmouth press release blocked automated access, so a second source was added. |
+| Catella APAM | Corrected: the £1.4bn figure is from 2018, and APAM describes itself as UK, not UK and Ireland. The Berlin fund arm co-investing with APAM is confirmed. |
+
+Hines source: [Hines expands UK retail park strategy with three acquisitions](https://www.hines.com/news/hines-expands-uk-retail-park-strategy-with-three-acquisitions).
+Advenis sources: [Centrale des SCPI](https://www.centraledesscpi.com/scpi/societes-de-gestion/advenis), [sinvestir on Eden](https://sinvestir.fr/?p=90051).
+GARBE and Redevco: [Greenberg Traurig, September 2026](https://www.gtlaw.com/de/news/2026/09/press-releases/greenberg-traurig-advises-garbe-industrial-real-estate-on-sale-of-multiuser-park-in-duisburg).
+Acquirepad customers and integrations: [acquirepad.com/customers](https://www.acquirepad.com/customers).

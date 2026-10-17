@@ -1,0 +1,6 @@
+# Private working notes, kept locally and out of the public repo.
+AUDIT_COMMERCIAL.md
+
+# Python and test caches
+__pycache__/
+.pytest_cache/
