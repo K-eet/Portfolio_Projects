@@ -13,8 +13,8 @@ There is also an interactive version where you can set the weights yourself. See
 [Running it](#running-it).
 
 > **Case study: [Acquirepad UK target accounts](case_studies/acquirepad_uk/).** The same method,
-> applied by hand to a different buyer. 27 UK commercial real estate investors were researched from
-> public sources for Acquirepad, a Berlin data and workflow platform entering the UK. Every score above
+> applied by hand to a different buyer. 27 buyers of UK commercial property were researched from
+> public sources for Acquirepad, a Berlin AI-native operating system for real estate, entering the UK. Every score above
 > zero carries a source URL. The output is a [one-page target list](case_studies/acquirepad_uk/outputs/acquirepad_uk_targets.pdf)
 > with a first move for each firm.
 

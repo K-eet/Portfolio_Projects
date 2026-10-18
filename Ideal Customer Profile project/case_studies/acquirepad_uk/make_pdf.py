@@ -23,31 +23,32 @@ RANKED_CSV = os.path.join(HERE, "outputs", "ranked.csv")
 PDF_PATH = os.path.join(HERE, "outputs", "acquirepad_uk_targets.pdf")
 
 # The cut must not split a tie. make_pdf checks this before drawing anything.
-TOP_N = 16
+TOP_N = 15
 METHOD_MAX_LINES = 2
 
 TITLE = "Acquirepad UK: first target accounts"
 METHOD = (
-    "Acquirepad: one shared data and workflow layer across Investment, Portfolio, Asset and Property "
-    "Management, Research, CRM, Letting and data rooms. 27 UK buyers scored 0 to 3 on six "
-    "dimensions, led by operating breadth, triggers and German links."
+    "Acquirepad is the AI-native operating system and data layer for the real estate industry. "
+    "27 buyers of UK commercial property scored on six dimensions, led by recent UK triggers."
 )
 PLAYS_HEAD = "Where I'd start"
 PLAYS = [
     "<b>German links.</b> HIH, Union, Deka and Patrizia, plus Columbia Threadneedle through Patrizia's "
     "fund. Same language, German references, intros through Acquirepad's network.",
     "<b>Continental buyers of small UK lots.</b> Edmond de Rothschild, Iroko, Corum and Remake. "
-    "Many agent IMs per deal, small UK teams. Advenis, a French SCPI group, is the reference.",
-    "<b>UK integrated managers.</b> Martley, NewRiver and Catella APAM run the most functions "
-    "in-house, so they have the most to connect.",
+    "Many agent IMs per deal, small UK teams. Advenis, a French customer, is the reference.",
+    "<b>UK firms with new capital.</b> Martley, NewRiver, Chancerygate and Focus Industrial have a new "
+    "fund, partner, owner or platform this year, so their systems are being chosen now.",
     "<b>Not on the list: existing customers.</b> Hines bought three UK retail parks in September 2026. "
     "Advenis launched its Eden SCPI with the UK as a target market. Both are expansion accounts.",
 ]
 REPO_URL = ("https://github.com/K-eet/Portfolio_Projects/tree/main/"
             "Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk")
-FOOTER = (f"Keet Lee  |  Henley Business School  |  Research date 17 October 2026  |  "
-          f"Full scoring and sources: <link href='{REPO_URL}' color='#1a4fa0'>"
-          f"github.com/K-eet/Portfolio_Projects</link>")
+# Shown in full so a printed copy still leads to the case study, not the repo root.
+REPO_TEXT = ("github.com/K-eet/Portfolio_Projects/tree/main/"
+             "Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk")
+FOOTER = (f"Keet Lee  |  MSc Applied AI for Business, Henley Business School  |  Research date 20 October 2026<br/>"
+          f"Full scoring and sources: <link href='{REPO_URL}' color='#1a4fa0'>{REPO_TEXT}</link>")
 
 MARGIN = 14 * mm
 GREY = colors.HexColor("#555555")
@@ -106,8 +107,8 @@ def build_table(rows, st):
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LINEBELOW", (0, 0), (-1, 0), 0.8, colors.black),
         ("LINEBELOW", (0, 1), (-1, -1), 0.3, RULE),
-        ("TOPPADDING", (0, 0), (-1, -1), 2.4),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.4),
+        ("TOPPADDING", (0, 0), (-1, -1), 2.2),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 2.2),
         ("LEFTPADDING", (0, 0), (-1, -1), 2.5),
         ("RIGHTPADDING", (0, 0), (-1, -1), 2.5),
     ]))
@@ -135,11 +136,12 @@ def main():
 
     doc = SimpleDocTemplate(
         PDF_PATH, pagesize=A4,
-        leftMargin=MARGIN, rightMargin=MARGIN, topMargin=MARGIN, bottomMargin=MARGIN + 4 * mm,
+        leftMargin=MARGIN, rightMargin=MARGIN, topMargin=MARGIN, bottomMargin=MARGIN + 8 * mm,
         title=TITLE, author="Keet Lee",
     )
     method = Paragraph(METHOD, st["method"])
-    _, height = method.wrap(A4[0] - 2 * MARGIN, A4[1])
+    # Measure at the width the frame actually prints: SimpleDocTemplate pads it 6pt each side.
+    _, height = method.wrap(A4[0] - 2 * MARGIN - 12, A4[1])
     lines = round(height / st["method"].leading)
     if lines > METHOD_MAX_LINES:
         raise SystemExit(f"Method note runs to {lines} lines. Keep it to {METHOD_MAX_LINES}.")
@@ -148,12 +150,12 @@ def main():
         Paragraph(TITLE, st["title"]),
         Spacer(1, 2 * mm),
         method,
-        Spacer(1, 3.5 * mm),
+        Spacer(1, 3 * mm),
         Paragraph(PLAYS_HEAD, st["section"]),
         Spacer(1, 1 * mm),
     ]
     story += [Paragraph(p, st["play"], bulletText="•") for p in PLAYS]
-    story += [Spacer(1, 4 * mm), build_table(rows, st)]
+    story += [Spacer(1, 3 * mm), build_table(rows, st)]
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
 
     if len(pages) != 1:

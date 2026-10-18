@@ -9,7 +9,7 @@ in three outbound emails that each cite a specific fact about the company they a
 **136,542 sellable accounts ranked, with 19,565 sibling SPVs folded into their parent developers.**
 *Python, pandas, 42 tests, and an interactive Streamlit app you can run locally.*
 - **Case study: [Acquirepad UK target accounts](Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk/).**
-  The same method applied by hand: 27 UK commercial real estate investors researched for a Berlin
+  The same method applied by hand: 27 buyers of UK commercial property researched for a Berlin
   proptech entering the UK. Every score above zero carries a source, and each firm on the
   [one-page list](Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk/outputs/acquirepad_uk_targets.pdf)
   has a first move.

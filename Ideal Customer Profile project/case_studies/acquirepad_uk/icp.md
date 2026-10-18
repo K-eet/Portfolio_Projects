@@ -1,11 +1,10 @@
 # Acquirepad UK: ideal customer profile
 
-**Vendor.** Acquirepad is one shared data and workflow layer for commercial real estate (CRE) investors.
-It runs across Investment, Portfolio Management, Asset Management, Property Management, Research, CRM,
-Letting and data rooms. It does not sell point AI tools.
+**Vendor.** Acquirepad is the AI-native operating system and data layer for the real estate industry. It automates workflows across acquisitions, research, document preparation, financial calculations, capital raising, portfolio management, debt tracking, commercial leasing, reporting and sales, and integrates with the rest of the real estate software stack. It does not sell point AI tools.
 
-**Buyer.** Its named customers are mid-sized German investment and asset managers. The UK entry question
-is which UK buyers of commercial property run enough of those functions in-house to need one shared layer,
+**Buyer.** Its named customers are mid-sized German investment and asset managers, and it has customers in
+France, the Netherlands, Poland and Sweden. The UK entry question is which UK buyers of commercial property
+run enough of those functions in-house to need one operating system,
 are active now, and are close enough to Acquirepad's German network for a founder-led sale to win.
 
 **UK terms.** The UK equivalent of the German exposé is the agent's information memorandum (IM).
@@ -21,17 +20,17 @@ total = sum( weight[d] * score[d] / 3 )   for the six dimensions
 A fact that cannot be verified from a public source scores 0 and is marked "unverified". So a low score
 can mean "weak fit" or "no public evidence". The sources column shows which one applies.
 
-The window for deal flow and triggers is the 12 months to 17 October 2026, the research date.
+The window for deal flow and triggers is the 12 months to 20 October 2026, the research date.
 
 The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re-run `python score.py`.
 
 | # | Dimension | Weight | Why this weight |
 |---|---|---|---|
 | 1 | Segment fit | 15 | The wrong type of firm cannot buy, however strong the other signals are. |
-| 2 | Size fit | 10 | Mid-market is where a founder can reach the decision maker and win without procurement. |
-| 3 | Deal flow | 15 | More IMs and rent rolls mean more data to share across teams. Partly overlaps with active capital in the trigger. |
-| 4 | Operating breadth | 20 | A shared layer pays off when one firm runs many functions. Integrated firms feel the gaps between tools most. |
-| 5 | Trigger | 20 | Active capital or a new mandate gives a reason to talk now. |
+| 2 | Size fit | 5 | Mid-market is where a founder can reach the decision maker, but the size evidence is coarse. |
+| 3 | Deal flow | 10 | More IMs and rent rolls mean more data to share across teams. Overlaps with active capital in the trigger. |
+| 4 | Operating breadth | 15 | One operating system pays off when one firm runs many functions. Integrated firms feel the gaps between tools most. |
+| 5 | Trigger | 35 | The strongest single signal. A new fund, owner, team or UK deal is when systems get chosen, and it gives a reason to call this month. |
 | 6 | Warm path | 20 | Acquirepad's customers are mid-sized German managers. A German link turns a cold email into a reference. |
 | | **Total** | **100** | |
 
@@ -65,16 +64,16 @@ The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re
 - **Event, 0 to 2.**
   - 2: New UK fund, mandate or platform with capital committed, a new head of UK or UK office, first UK deals for a pan-European strategy, or a change of owner that brings new capital.
   - 1: A senior UK hire outside acquisitions, or an announced strategy or capital raise without a close.
-- **Active capital, +1.** A fund close or an acquisition in the last 12 months.
+- **Active capital, +1.** A UK acquisition, or a fund close with a confirmed UK allocation, in the last 12 months. Deals outside the UK do not count.
 - **Data, digital or innovation hire, +1.** A named hire into one of those roles in the last 12 months.
 
 **6. Warm path**
 - 3: German-owned or German-backed. A German parent or owner, or a German manager itself.
-- 2: A German partner, co-investor or sister company directly named, German operations, or a direct link to Acquirepad's team or customers.
-- 1: Other continental European parent (for example Swiss, Dutch, Belgian, French).
+- 2: A German partner, co-investor or sister company directly named, German operations, a direct link to Acquirepad's team or customers, or a parent in a market where Acquirepad already has customers (France, the Netherlands, Poland, Sweden).
+- 1: Other continental European parent (for example Swiss or Belgian).
 - 0: UK or non-European ownership only, or unverified.
 
-## Version 2 (17 October 2026)
+## Version 2 (20 October 2026)
 
 Updated after Acquirepad's LinkedIn posts repositioned it from point AI tools to a shared data and
 workflow layer. Operating breadth was added. Trigger now rewards active capital and data hires. Warm path
@@ -88,13 +87,23 @@ trigger and warm path.
 
 Both need a source URL, like any score. `score.py` checks this.
 
-## Version 3 (17 October 2026)
+## Version 3 (20 October 2026)
 
 - Process pain removed. Only 1 of 27 firms had any evidence, so it added weight without information. Its 5 points moved to operating breadth.
 - Checked against the customers with published stories on Acquirepad's site: GIEAG, HT Group, GARBE, Hines, Advenis, KRE Group, GPEP and WERTCONTOR. None of the 27 firms is among them.
 - Customers used as routes in. GARBE sold Redevco a Duisburg logistics park in September 2026, so Redevco moved to warm path 2. Advenis, a French SCPI group, is the reference for French SCPI buyers.
 - Two customers are UK expansion accounts, not targets: Hines bought three UK retail parks in September 2026, and Advenis launched its Eden SCPI with the UK as a target market.
 - Swiss Life AM UK moved to warm path 2: Acquirepad's team lists Swiss Life experience.
+
+## Version 4 (20 October 2026)
+
+- Active capital now counts UK deals only. Union Investment (a Swedish retail park), Catella APAM (a Dublin purchase), Sirius (a German business park), Redevco (a European fund with no confirmed UK allocation) and Sofidy (acquisitions not broken down by country) lost the point. Each now shows "No UK trigger found".
+- The page shows the top 15 firms.
+
+## Version 5 (20 October 2026)
+
+- Trigger weight raised from 20 to 35, so the page favours firms with a reason to call now. Size, deal flow and operating breadth gave up the points. Of the top 15, 14 now have a UK trigger. Union Investment is the exception and stays on the strength of its German ownership.
+- Acquirepad's job advert says it has customers in France, the Netherlands, Poland and Sweden. French parents (Iroko, Corum, Remake, Sofidy) moved from warm path 1 to 2. Advenis, a French group, is on Acquirepad's customer page.
 
 ## What the score is not
 

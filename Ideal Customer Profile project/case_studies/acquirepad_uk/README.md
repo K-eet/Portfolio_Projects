@@ -4,18 +4,17 @@
 
 ## Problem
 
-Acquirepad is one shared data and workflow layer for commercial real estate investors. It runs across
-Investment, Portfolio Management, Asset Management, Property Management, Research, CRM, Letting and data
-rooms. Its named customers are mid-sized German investment and asset managers. It now wants to enter the
+Acquirepad is the AI-native operating system and data layer for the real estate industry. It automates workflows across acquisitions, research, document preparation, financial calculations, capital raising, portfolio management, debt tracking, commercial leasing, reporting and sales, and integrates with the rest of the real estate software stack. Its named customers are mid-sized German investment and asset
+managers, and it works with firms across Germany, France, the Netherlands, Poland and Sweden. It now wants to enter the
 UK. For a founder-led sale, the first question is which UK firms to approach first, how, and why now.
 
 ## Method
 
 - **ICP.** Six dimensions, each scored 0 to 3: segment, size, UK deal flow, operating breadth, a recent
-  trigger, and a warm path through a German link. Trigger and warm path carry the most weight (20 of 100
-  each). The weights and rubric are in [icp.md](icp.md).
+  trigger, and a warm path through a German link. Trigger carries the most weight (35 of 100), so the
+  page favours firms with a reason to call now. The weights and rubric are in [icp.md](icp.md).
 - **Research.** 27 candidate firms, from public sources only: press releases, company sites, trade press,
-  stock exchange announcements and job boards. The window is the 12 months to 17 October 2026.
+  stock exchange announcements and job boards. The window is the 12 months to 20 October 2026.
 - **Evidence rule.** Every score above 0 has at least one source URL in the CSV, tagged with the dimension
   it supports. Anything unverified scores 0 and is listed in the `unverified` column. Named people and
   known systems need sources too. [score.py](score.py) refuses to rank if any of this is broken.
@@ -31,12 +30,11 @@ UK. For a founder-led sale, the first question is which UK firms to approach fir
 
 | File | |
 |---|---|
-| [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf) | One A4 page: three plays to start with, then the top 16 firms with why each fits, its trigger and a first move |
+| [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf) | One A4 page: three plays to start with, then the top 15 firms with why each fits, its trigger and a first move |
 | [data/uk_targets.csv](data/uk_targets.csv) | All 27 firms: scores, trigger parts, first move, systems, sources and unverified dimensions |
 | [outputs/ranked.csv](outputs/ranked.csv) | The same, ranked |
 
-The page shows 16 firms, the most that fit on one readable A4 page. `make_pdf.py` refuses any cut that
-splits a tie.
+The page shows the top 15 firms. `make_pdf.py` refuses any cut that splits a tie.
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt
@@ -49,8 +47,8 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 
 1. **Zero means "not found", not "absent".** Many zeros are gaps in public evidence. Clipstone, for
    example, scores 0 on operating breadth only because its in-house functions are not published.
-2. **No data, digital or innovation hires were found.** That trigger part is 0 for every firm. It is the
-   cheapest thing to check on LinkedIn before an email goes out.
+2. No data, digital or innovation hires were found. Current roles and open job ads were checked on
+   LinkedIn for all five of the top five firms on 20 October 2026. None had open AI or data roles.
 3. **Trade press is often paywalled.** Several facts rest on headlines and summaries. Five firms were
    spot-checked against their sources (below). The rest were not.
 4. **Some evidence is old or group-level.** Catella APAM's £1.4bn is from 2018. Corum's in-house property
@@ -58,7 +56,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 5. **Hand-scored.** Two researchers would not score every row the same. The CSV shows the evidence so
    that each score can be challenged.
 
-## Spot-check, 17 October 2026
+## Spot-check, 20 October 2026
 
 | Firm | Result |
 |---|---|

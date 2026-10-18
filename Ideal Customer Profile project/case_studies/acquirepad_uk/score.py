@@ -20,10 +20,10 @@ RANKED_CSV = os.path.join(HERE, "outputs", "ranked.csv")
 # The reasoning for each is in icp.md.
 WEIGHTS = {
     "segment": 15,
-    "size": 10,
-    "deal_flow": 15,
-    "operating_breadth": 20,
-    "trigger": 20,
+    "size": 5,
+    "deal_flow": 10,
+    "operating_breadth": 15,
+    "trigger": 35,
     "warm_path": 20,
 }
 MAX_SCORE = 3
