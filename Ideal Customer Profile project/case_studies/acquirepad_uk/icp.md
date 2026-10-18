@@ -20,7 +20,7 @@ total = sum( weight[d] * score[d] / 3 )   for the six dimensions
 A fact that cannot be verified from a public source scores 0 and is marked "unverified". So a low score
 can mean "weak fit" or "no public evidence". The sources column shows which one applies.
 
-The window for deal flow and triggers is the 12 months to 20 October 2026, the research date.
+The window for deal flow and triggers is the 12 months to 18 October 2026, the research date.
 
 The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re-run `python score.py`.
 
@@ -73,7 +73,7 @@ The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re
 - 1: Other continental European parent (for example Swiss or Belgian).
 - 0: UK or non-European ownership only, or unverified.
 
-## Version 2 (20 October 2026)
+## Version 2 (18 October 2026)
 
 Updated after Acquirepad's LinkedIn posts repositioned it from point AI tools to a shared data and
 workflow layer. Operating breadth was added. Trigger now rewards active capital and data hires. Warm path
@@ -87,7 +87,7 @@ trigger and warm path.
 
 Both need a source URL, like any score. `score.py` checks this.
 
-## Version 3 (20 October 2026)
+## Version 3 (18 October 2026)
 
 - Process pain removed. Only 1 of 27 firms had any evidence, so it added weight without information. Its 5 points moved to operating breadth.
 - Checked against the customers with published stories on Acquirepad's site: GIEAG, HT Group, GARBE, Hines, Advenis, KRE Group, GPEP and WERTCONTOR. None of the 27 firms is among them.
@@ -95,15 +95,15 @@ Both need a source URL, like any score. `score.py` checks this.
 - Two customers are UK expansion accounts, not targets: Hines bought three UK retail parks in September 2026, and Advenis launched its Eden SCPI with the UK as a target market.
 - Swiss Life AM UK moved to warm path 2: Acquirepad's team lists Swiss Life experience.
 
-## Version 4 (20 October 2026)
+## Version 4 (18 October 2026)
 
 - Active capital now counts UK deals only. Union Investment (a Swedish retail park), Catella APAM (a Dublin purchase), Sirius (a German business park), Redevco (a European fund with no confirmed UK allocation) and Sofidy (acquisitions not broken down by country) lost the point. Each now shows "No UK trigger found".
 - The page shows the top 15 firms.
 
-## Version 5 (20 October 2026)
+## Version 5 (18 October 2026)
 
 - Trigger weight raised from 20 to 35, so the page favours firms with a reason to call now. Size, deal flow and operating breadth gave up the points. Of the top 15, 14 now have a UK trigger. Union Investment is the exception and stays on the strength of its German ownership.
-- Acquirepad's job advert says it has customers in France, the Netherlands, Poland and Sweden. French parents (Iroko, Corum, Remake, Sofidy) moved from warm path 1 to 2. Advenis, a French group, is on Acquirepad's customer page.
+- Acquirepad's company description says it works with real estate companies in Germany, France, the Netherlands, Poland, Sweden and other European markets. Source: [University of Reading TargetConnect employer page](https://reading.targetconnect.net/student/employers.html?employer=484319&page=employer) (login required, seen 17 October 2026). French parents (Iroko, Corum, Remake, Sofidy) moved from warm path 1 to 2. Advenis, a French group, is on Acquirepad's customer page.
 
 ## What the score is not
 

@@ -39,15 +39,20 @@ PLAYS = [
     "Many agent IMs per deal, small UK teams. Advenis, a French customer, is the reference.",
     "<b>UK firms with new capital.</b> Martley, NewRiver, Chancerygate and Focus Industrial have a new "
     "fund, partner, owner or platform this year, so their systems are being chosen now.",
-    "<b>Not on the list: existing customers.</b> Hines bought three UK retail parks in September 2026. "
-    "Advenis launched its Eden SCPI with the UK as a target market. Both are expansion accounts.",
+    "<b>First 30 days:</b> follow up every UK lead from London, contact the top 15 "
+    "with a tailored note, and report weekly on any conversions.",
 ]
+# Shown below the table: not targets, but the fastest UK wins may come from accounts already won.
+CUSTOMERS_NOTE = (
+    "<b>Not on the list: existing customers.</b> Hines bought three UK retail parks in September 2026. "
+    "Advenis launched its Eden SCPI with the UK as a target market. Both are expansion accounts."
+)
 REPO_URL = ("https://github.com/K-eet/Portfolio_Projects/tree/main/"
             "Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk")
 # Shown in full so a printed copy still leads to the case study, not the repo root.
 REPO_TEXT = ("github.com/K-eet/Portfolio_Projects/tree/main/"
              "Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk")
-FOOTER = (f"Keet Lee  |  MSc Applied AI for Business, Henley Business School  |  Research date 20 October 2026<br/>"
+FOOTER = (f"Keet Lee  |  MSc Applied AI for Business, Henley Business School  |  Research date 18 October 2026<br/>"
           f"Full scoring and sources: <link href='{REPO_URL}' color='#1a4fa0'>{REPO_TEXT}</link>")
 
 MARGIN = 14 * mm
@@ -155,7 +160,8 @@ def main():
         Spacer(1, 1 * mm),
     ]
     story += [Paragraph(p, st["play"], bulletText="•") for p in PLAYS]
-    story += [Spacer(1, 3 * mm), build_table(rows, st)]
+    story += [Spacer(1, 3 * mm), build_table(rows, st),
+              Spacer(1, 3 * mm), Paragraph(CUSTOMERS_NOTE, st["play"], bulletText="\u2022")]
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
 
     if len(pages) != 1:

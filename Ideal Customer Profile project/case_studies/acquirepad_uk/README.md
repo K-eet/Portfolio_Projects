@@ -14,7 +14,7 @@ UK. For a founder-led sale, the first question is which UK firms to approach fir
   trigger, and a warm path through a German link. Trigger carries the most weight (35 of 100), so the
   page favours firms with a reason to call now. The weights and rubric are in [icp.md](icp.md).
 - **Research.** 27 candidate firms, from public sources only: press releases, company sites, trade press,
-  stock exchange announcements and job boards. The window is the 12 months to 20 October 2026.
+  stock exchange announcements and job boards. The window is the 12 months to 18 October 2026.
 - **Evidence rule.** Every score above 0 has at least one source URL in the CSV, tagged with the dimension
   it supports. Anything unverified scores 0 and is listed in the `unverified` column. Named people and
   known systems need sources too. [score.py](score.py) refuses to rank if any of this is broken.
@@ -30,7 +30,7 @@ UK. For a founder-led sale, the first question is which UK firms to approach fir
 
 | File | |
 |---|---|
-| [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf) | One A4 page: three plays to start with, then the top 15 firms with why each fits, its trigger and a first move |
+| [outputs/acquirepad_uk_targets.pdf](outputs/acquirepad_uk_targets.pdf) | One A4 page: three plays and a 30-day plan, the top 15 firms with why each fits, its trigger and a first move, then existing customers to expand |
 | [data/uk_targets.csv](data/uk_targets.csv) | All 27 firms: scores, trigger parts, first move, systems, sources and unverified dimensions |
 | [outputs/ranked.csv](outputs/ranked.csv) | The same, ranked |
 
@@ -48,7 +48,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 1. **Zero means "not found", not "absent".** Many zeros are gaps in public evidence. Clipstone, for
    example, scores 0 on operating breadth only because its in-house functions are not published.
 2. No data, digital or innovation hires were found. Current roles and open job ads were checked on
-   LinkedIn for all five of the top five firms on 20 October 2026. None had open AI or data roles.
+   LinkedIn for all five of the top five firms on 18 October 2026. None had open AI or data roles.
 3. **Trade press is often paywalled.** Several facts rest on headlines and summaries. Five firms were
    spot-checked against their sources (below). The rest were not.
 4. **Some evidence is old or group-level.** Catella APAM's £1.4bn is from 2018. Corum's in-house property
@@ -56,7 +56,7 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 5. **Hand-scored.** Two researchers would not score every row the same. The CSV shows the evidence so
    that each score can be challenged.
 
-## Spot-check, 20 October 2026
+## Spot-check, 18 October 2026
 
 | Firm | Result |
 |---|---|
