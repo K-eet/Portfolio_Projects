@@ -19,12 +19,12 @@ RANKED_CSV = os.path.join(HERE, "outputs", "ranked.csv")
 # Weights sum to 100, so a firm scoring 3 on every dimension totals 100.
 # The reasoning for each is in icp.md.
 WEIGHTS = {
-    "segment": 15,
+    "segment": 20,
     "size": 5,
-    "deal_flow": 10,
+    "deal_flow": 15,
     "operating_breadth": 15,
     "trigger": 35,
-    "warm_path": 20,
+    "warm_path": 10,
 }
 MAX_SCORE = 3
 

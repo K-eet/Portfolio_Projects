@@ -11,10 +11,10 @@ UK. For a founder-led sale, the first question is which UK firms to approach fir
 ## Method
 
 - **ICP.** Six dimensions, each scored 0 to 3: segment, size, UK deal flow, operating breadth, a recent
-  trigger, and a warm path through a German link. Trigger carries the most weight (35 of 100), so the
+  trigger, and a warm path through Acquirepad's existing network. Trigger carries the most weight (35 of 100), so the
   page favours firms with a reason to call now. The weights and rubric are in [icp.md](icp.md).
 - **Research.** 27 candidate firms, from public sources only: press releases, company sites, trade press,
-  stock exchange announcements and job boards. The window is the 12 months to 18 October 2026.
+  stock exchange announcements and job boards. The window is the 12 months to 19 October 2026.
 - **Evidence rule.** Every score above 0 has at least one source URL in the CSV, tagged with the dimension
   it supports. Anything unverified scores 0 and is listed in the `unverified` column. Named people and
   known systems need sources too. [score.py](score.py) refuses to rank if any of this is broken.

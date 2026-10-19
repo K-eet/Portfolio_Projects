@@ -33,12 +33,12 @@ METHOD = (
 )
 PLAYS_HEAD = "Where I'd start"
 PLAYS = [
-    "<b>German links.</b> HIH, Union, Deka and Patrizia, plus Columbia Threadneedle through Patrizia's "
-    "fund. Same language, German references, intros through Acquirepad's network.",
-    "<b>Continental buyers of small UK lots.</b> Edmond de Rothschild, Iroko, Corum and Remake. "
-    "Many agent IMs per deal, small UK teams. Advenis, a French customer, is the reference.",
     "<b>UK firms with new capital.</b> Martley, NewRiver, Chancerygate and Focus Industrial have a new "
     "fund, partner, owner or platform this year, so their systems are being chosen now.",
+    "<b>UK managers buying often.</b> Clearbell, Custodian and Greenridge do frequent small deals, each "
+    "with its own IM and rent roll.",
+    "<b>Continental buyers of small UK lots.</b> Edmond de Rothschild, Iroko, Corum and Remake. "
+    "Many agent IMs per deal, small UK teams. Advenis, a French customer, is the reference.",
     "<b>First 30 days:</b> follow up every UK lead from London, contact the top 15 "
     "with a tailored note, and report weekly on any conversions.",
 ]
@@ -52,7 +52,7 @@ REPO_URL = ("https://github.com/K-eet/Portfolio_Projects/tree/main/"
 # Shown in full so a printed copy still leads to the case study, not the repo root.
 REPO_TEXT = ("github.com/K-eet/Portfolio_Projects/tree/main/"
              "Ideal%20Customer%20Profile%20project/case_studies/acquirepad_uk")
-FOOTER = (f"Keet Lee  |  MSc Applied AI for Business, Henley Business School  |  Research date 18 October 2026<br/>"
+FOOTER = (f"Keet Lee  |  MSc Applied AI for Business, Henley Business School  |  Research date 19 October 2026<br/>"
           f"Full scoring and sources: <link href='{REPO_URL}' color='#1a4fa0'>{REPO_TEXT}</link>")
 
 MARGIN = 14 * mm

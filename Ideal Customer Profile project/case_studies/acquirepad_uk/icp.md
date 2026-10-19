@@ -5,7 +5,7 @@
 **Buyer.** Its named customers are mid-sized German investment and asset managers, and it has customers in
 France, the Netherlands, Poland and Sweden. The UK entry question is which UK buyers of commercial property
 run enough of those functions in-house to need one operating system,
-are active now, and are close enough to Acquirepad's German network for a founder-led sale to win.
+and are active in the UK now. A link to Acquirepad's existing network helps, but it is a tie-breaker, not a requirement.
 
 **UK terms.** The UK equivalent of the German exposé is the agent's information memorandum (IM).
 
@@ -20,18 +20,18 @@ total = sum( weight[d] * score[d] / 3 )   for the six dimensions
 A fact that cannot be verified from a public source scores 0 and is marked "unverified". So a low score
 can mean "weak fit" or "no public evidence". The sources column shows which one applies.
 
-The window for deal flow and triggers is the 12 months to 18 October 2026, the research date.
+The window for deal flow and triggers is the 12 months to 19 October 2026, the research date.
 
 The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re-run `python score.py`.
 
 | # | Dimension | Weight | Why this weight |
 |---|---|---|---|
-| 1 | Segment fit | 15 | The wrong type of firm cannot buy, however strong the other signals are. |
+| 1 | Segment fit | 20 | The wrong type of firm cannot buy, however strong the other signals are. A UK commercial property buyer is the whole point of a UK entry. |
 | 2 | Size fit | 5 | Mid-market is where a founder can reach the decision maker, but the size evidence is coarse. |
-| 3 | Deal flow | 10 | More IMs and rent rolls mean more data to share across teams. Overlaps with active capital in the trigger. |
+| 3 | Deal flow | 15 | More UK IMs and rent rolls mean more data to share across teams. Partly overlaps with active capital in the trigger. |
 | 4 | Operating breadth | 15 | One operating system pays off when one firm runs many functions. Integrated firms feel the gaps between tools most. |
 | 5 | Trigger | 35 | The strongest single signal. A new fund, owner, team or UK deal is when systems get chosen, and it gives a reason to call this month. |
-| 6 | Warm path | 20 | Acquirepad's customers are mid-sized German managers. A German link turns a cold email into a reference. |
+| 6 | Warm path | 10 | A link to Acquirepad's network makes an intro easier, but the UK entry does not depend on it. |
 | | **Total** | **100** | |
 
 ## Rubric
@@ -104,6 +104,12 @@ Both need a source URL, like any score. `score.py` checks this.
 
 - Trigger weight raised from 20 to 35, so the page favours firms with a reason to call now. Size, deal flow and operating breadth gave up the points. Of the top 15, 14 now have a UK trigger. Union Investment is the exception and stays on the strength of its German ownership.
 - Acquirepad's company description says it works with real estate companies in Germany, France, the Netherlands, Poland, Sweden and other European markets. Source: [University of Reading TargetConnect employer page](https://reading.targetconnect.net/student/employers.html?employer=484319&page=employer) (login required, seen 17 October 2026). French parents (Iroko, Corum, Remake, Sofidy) moved from warm path 1 to 2. Advenis, a French group, is on Acquirepad's customer page.
+
+## Version 6 (19 October 2026)
+
+- Warm path cut from 20 to 10. Acquirepad is expanding into the UK, so a firm's UK fit and UK activity matter more than whether it is German-owned. Segment rose to 20 and deal flow to 15.
+- All 15 firms on the page now have a UK trigger. Deka and Union Investment dropped off; Custodian and Greenridge, UK managers buying now, came on.
+- The German links play was replaced with "UK managers buying often". German intro routes remain in the First move column.
 
 ## What the score is not
 
