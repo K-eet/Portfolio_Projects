@@ -22,6 +22,12 @@ can mean "weak fit" or "no public evidence". The sources column shows which one 
 
 The window for deal flow and triggers is the 12 months to 19 October 2026, the research date.
 
+**Freshness rule.** Events (deal flow and triggers) must fall inside that 12-month window. Slower facts
+(segment, size, operating breadth, warm path, first moves and systems) need a source from the last three
+years, so dated on or after 19 October 2023, or a live company or vendor page that describes the firm as it
+is now. Anything older counts only if a fresh source backs it up. Otherwise the score drops to what current
+evidence supports.
+
 The weights live in one place, `WEIGHTS` in `score.py`. Change them there and re-run `python score.py`.
 
 | # | Dimension | Weight | Why this weight |
@@ -110,6 +116,13 @@ Both need a source URL, like any score. `score.py` checks this.
 - Warm path cut from 20 to 10. Acquirepad is expanding into the UK, so a firm's UK fit and UK activity matter more than whether it is German-owned. Segment rose to 20 and deal flow to 15.
 - All 15 firms on the page now have a UK trigger. Deka and Union Investment dropped off; Custodian and Greenridge, UK managers buying now, came on.
 - The German links play was replaced with "UK managers buying often". German intro routes remain in the First move column.
+
+## Version 7 (19 October 2026)
+
+- Added the freshness rule above. Five scores rested only on evidence more than three years old and were cut to what current sources support: Corum operating breadth 3 to 1, Iroko 3 to 2, NewRiver 3 to 2, Custodian 1 to 0, Clearbell size 2 to 0. AshbyCapital's size (a 2016 figure) also went to 0.
+- Old sources replaced with fresh ones where they exist: Catella APAM's size now cites Catella's Q2 2026 presentation (SEK 16bn), Swiss Life's size a WealthBriefing article of 6 October 2025, and Chancerygate's breadth IREI, 31 July 2026.
+- System claims older than three years were removed: Chancerygate (Coyote, MRI; 2022), HIH (cloudbrixx; 2022) and Clipstone (Yardi; 2023). NewRiver's Yardi claim stays, sourced to Yardi's live client-story page.
+- Custodian dropped off the page and Deka came on. All 15 firms on the page still have a UK trigger.
 
 ## What the score is not
 

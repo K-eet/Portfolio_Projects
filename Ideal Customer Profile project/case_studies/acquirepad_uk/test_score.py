@@ -68,3 +68,14 @@ def test_ties_break_on_deal_flow_not_on_csv_order():
     weights = {d: 0 for d in score.WEIGHTS} | {"deal_flow": 50, "segment": 50}
     ranked = score.rank([quiet, busy], weights)
     assert [r["firm"] for r in ranked] == ["Busy", "Quiet"]
+
+
+def test_sources_page_lists_every_firm_and_marks_the_page_cut():
+    rows = [make_row(f"Firm {i}", deal_flow=3,
+                     sources=f"deal_flow: https://www.example.com/{i}") for i in range(score.PAGE_TOP_N + 2)]
+    for r in rows:
+        r.update(why_fit="Why.", trigger="Trigger.", first_move="", systems="")
+    md = score.sources_markdown(score.rank(rows))
+    assert all(f"Firm {i}" in md for i in range(score.PAGE_TOP_N + 2))
+    assert "## Not on the page" in md
+    assert "[example.com](https://www.example.com/0)" in md

@@ -23,7 +23,7 @@ RANKED_CSV = os.path.join(HERE, "outputs", "ranked.csv")
 PDF_PATH = os.path.join(HERE, "outputs", "acquirepad_uk_targets.pdf")
 
 # The cut must not split a tie. make_pdf checks this before drawing anything.
-TOP_N = 15
+from score import PAGE_TOP_N as TOP_N
 METHOD_MAX_LINES = 2
 
 TITLE = "Acquirepad UK: first target accounts"
@@ -35,8 +35,8 @@ PLAYS_HEAD = "Where I'd start"
 PLAYS = [
     "<b>UK firms with new capital.</b> Martley, NewRiver, Chancerygate and Focus Industrial have a new "
     "fund, partner, owner or platform this year, so their systems are being chosen now.",
-    "<b>UK managers buying often.</b> Clearbell, Custodian and Greenridge do frequent small deals, each "
-    "with its own IM and rent roll.",
+    "<b>UK managers buying often.</b> Clearbell and Greenridge do frequent small deals, each with its "
+    "own IM and rent roll.",
     "<b>Continental buyers of small UK lots.</b> Edmond de Rothschild, Iroko, Corum and Remake. "
     "Many agent IMs per deal, small UK teams. Advenis, a French customer, is the reference.",
     "<b>First 30 days:</b> follow up every UK lead from London, contact the top 15 "
