@@ -11,9 +11,7 @@ UK. For a founder-led sale, the first question is which UK firms to approach fir
 
 ## Method
 
-- **ICP.** Six dimensions, each scored 0 to 3: segment, size, UK deal flow, operating breadth, a recent
-  trigger, and a warm path through Acquirepad's existing network. Trigger carries the most weight (35 of 100), so the
-  page favours firms with a reason to call now. The weights and rubric are in [icp.md](icp.md).
+- **Ideal Customer Profile.** Six dimensions, each scored 0 to 3: segment, size, UK deal flow, operating breadth, a recent trigger, and a warm path through Acquirepad's existing network. Trigger carries the most weight (35 of 100), so the page favours firms with a reason to call now. The weights and rubric are in [icp.md](icp.md).
 - **Research.** 27 candidate firms, from public sources only: press releases, company sites, trade press,
   stock exchange announcements and job boards. The window is the 12 months to 19 October 2026.
 - **Evidence rule.** Every score above 0 has at least one source URL in the CSV, tagged with the dimension
@@ -59,18 +57,9 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt
 4. **Freshness cost some firms points.** Under the three-year rule, Corum, Iroko and NewRiver lost
    operating breadth points they would likely earn back on a first call. Some size figures are still
    group-level rather than UK-only.
-5. **Hand-scored.** Two researchers would not score every row the same. The CSV shows the evidence so
+5. **Manually-scored.** Two researchers would not score every row the same. The CSV shows the evidence so
    that each score can be challenged.
 
-## Spot-check, 18 October 2026
-
-| Firm | Result |
-|---|---|
-| Edmond de Rothschild REIM | Confirmed: Marlow, Stafford and Aberdeen deals, and the £100m target (19 May 2026). The Aberdeen completion date is not stated. |
-| Columbia Threadneedle Real Estate | Confirmed: Hanover merger, £1.5bn, Patrizia chose it after a review (2 July 2026). |
-| Martley Capital | Confirmed: all five facts, including the £500m target and over £110m deployed. |
-| Swiss Life AM UK | The co-CEO change was announced on 1 October 2025 and took effect on 1 January 2026. The Avonmouth press release blocked automated access, so a second source was added. |
-| Catella APAM | Corrected: the 2018 £1.4bn figure was replaced with Catella's Q2 2026 presentation (APAM adds SEK 16bn of AuM). APAM describes itself as UK, not UK and Ireland. The Berlin fund arm co-investing with APAM is confirmed. |
 
 Hines source: [Hines expands UK retail park strategy with three acquisitions](https://www.hines.com/news/hines-expands-uk-retail-park-strategy-with-three-acquisitions).
 Advenis sources: [Centrale des SCPI](https://www.centraledesscpi.com/scpi/societes-de-gestion/advenis), [sinvestir on Eden](https://sinvestir.fr/?p=90051).
